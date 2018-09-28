@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link rel="stylesheet" href="style\form.css">
+    <meta charset="utf-8">
+    <title>SoftUni Beers</title>
+  </head>
+  <body>
+    <main>
+      <center>
+        <h1>Order a Beer</h1>
+        <br>
+        <form>
+            <label>Brand</label>
+            <select>
+                <option selected disabled>Select a brand</option>
+                <option>Corona extra 330ml</option>
+                <option>2nd Beer 330ml</option>
+                <option>3rd Beer 330ml</option>
+                <option>4th Beer 330ml</option>
+            </select>
+
+            <label>Quantity</label>
+            <input type="number" min="1" max="15" placeholder="Enter amount of beers(1-15)">
+            <label>Destination</label>
+            <select>
+              <option selected disabled>Select a destination</option>
+              <option>1</option>
+              <option>2</option>
+            </select>
+            <label>Enter your birthdate</label>
+            <input type="text" placeholder="dd/mm/yyyy">
+            <label>Recommendations, opinions</label>
+            <input type="text" placeholder="share with us">
+            <input type="submit" name="" value="Order">
+        </form>
+      </center>
+    </main>
+  </body>
+</html>
