@@ -1,12 +1,12 @@
-﻿using SIS.HTTP.Enums;
+﻿using System.Net;
 
 namespace SIS.HTTP.Extensions
 {
-    public class HttpResponseStatusExtensions
+    public static class HttpResponseStatusExtensions
     {
-        public HttpResponseStatusCode GetResponseLine()
+        public static string GetResponseLine(this HttpStatusCode httpResponseStatus)
         {
-            return new HttpResponseStatusCode();
+            return $"{(int)httpResponseStatus} {httpResponseStatus}";
         }
     }
 }
