@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace SIS.HTTP.Headers
 {
@@ -27,6 +28,17 @@ namespace SIS.HTTP.Headers
         {
             var header = this.headers.FirstOrDefault(x => x.Key == key).Value;
             return header;
+        }
+
+        public override string ToString()
+        {
+            var result = new StringBuilder();
+            foreach (var httpHeader in this.headers)
+            {
+                result.AppendLine(httpHeader.ToString());
+            }
+
+            return result.ToString().Trim();
         }
     }
 }
