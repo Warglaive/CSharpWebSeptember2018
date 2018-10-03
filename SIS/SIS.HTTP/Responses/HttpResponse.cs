@@ -38,7 +38,6 @@ namespace SIS.HTTP.Responses
 
         public override string ToString()
         {
-            //status code bug.
             var result = new StringBuilder();
             result.Append($"{GlobalConstants.HttpOneProtocolFragment} {this.StatusCode.GetResponseLine()}")
                 .Append(Environment.NewLine)

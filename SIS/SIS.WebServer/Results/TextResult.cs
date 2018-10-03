@@ -1,4 +1,5 @@
-﻿using SIS.HTTP.Enums;
+﻿using System.Text;
+using SIS.HTTP.Enums;
 using SIS.HTTP.Headers;
 using SIS.HTTP.Responses;
 
@@ -10,6 +11,7 @@ namespace SIS.WebServer.Results
         : base(responseStatusCode)
         {
             this.Headers.Add(new HttpHeader("Content-Type", "text/plain"));
+            this.Content = Encoding.UTF8.GetBytes(content);
         }
     }
 }
