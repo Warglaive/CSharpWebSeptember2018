@@ -5,7 +5,7 @@ namespace SIS.Demo
 {
     public class Launcher
     {
-        static void Main()
+        public static void Main()
         {
             ServerRoutingTable serverRoutingTable = new ServerRoutingTable();
             serverRoutingTable.Routes[HttpRequestMethod.Get]["/"] = request => new HomeController().Index();
