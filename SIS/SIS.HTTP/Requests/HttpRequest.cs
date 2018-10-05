@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using SIS.HTTP.Common;
+using SIS.HTTP.Cookies;
 using SIS.HTTP.Enums;
 using SIS.HTTP.Exceptions;
 using SIS.HTTP.Extensions;
@@ -11,6 +12,8 @@ namespace SIS.HTTP.Requests
 {
     public class HttpRequest : IHttpRequest
     {
+        public IHttpCookieCollection Cookies { get; set; }
+
         private const char HttpRequestUrlQuerySeparator = '?';
 
         private const char HttpRequestUrlFragmentSeparator = '#';
@@ -30,7 +33,7 @@ namespace SIS.HTTP.Requests
             this.FormData = new Dictionary<string, object>();
             this.QueryData = new Dictionary<string, object>();
             this.Headers = new HttpHeaderCollection();
-
+            this.Cookies = new HttpCookieCollection();
             this.ParseRequest(requestString);
         }
         public string Path { get; private set; }
@@ -55,7 +58,35 @@ namespace SIS.HTTP.Requests
             this.ParseRequestUrl(requestLine);
             this.ParseRequestPath();
             this.ParseHeaders(splitRequestContent);
+            this.ParseCookies();
             this.ParseRequestParameters(requestString);
+        }
+
+        public void ParseCookies()
+        {
+            if (this.Headers.ContainsHeader(HttpHeader.Cookie))
+            {
+                var cookieString = this.Headers.GetHeader(HttpHeader.Cookie).Value;
+                if (string.IsNullOrEmpty(cookieString))
+                {
+                    return;
+                }
+
+                var splitCookies = cookieString.Split(HttpRequestCookiesSeparator);
+                foreach (var splitCookie in splitCookies)
+                {
+                    var cookieParams = splitCookie.Split(HttpRequestCookieNameValueSeparator, 2, StringSplitOptions.RemoveEmptyEntries);
+
+                    if (cookieParams.Length != 2)
+                    {
+                        continue;
+                    }
+
+                    this.Cookies.Add(new HttpCookie(cookieParams[0], cookieParams[1], false));
+                }
+            }
+
+            return;
         }
 
         public bool IsValidRequestLine(string[] requestLine)
@@ -74,7 +105,7 @@ namespace SIS.HTTP.Requests
             {
                 throw new BadRequestException();
             }
-            
+
             var isParsed = Enum.TryParse<HttpRequestMethod>(requestLine[0].Capitalize(), out var parsedMethod);
 
             if (!isParsed)
