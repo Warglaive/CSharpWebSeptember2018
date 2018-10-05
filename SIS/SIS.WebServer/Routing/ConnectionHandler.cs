@@ -4,7 +4,9 @@ using SIS.HTTP.Responses;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using SIS.HTTP.Cookies;
 using SIS.HTTP.Enums;
+using SIS.HTTP.Sessions;
 
 namespace SIS.WebServer.Routing
 {
@@ -12,13 +14,37 @@ namespace SIS.WebServer.Routing
     {
         private readonly Socket client;
         private readonly ServerRoutingTable serverRoutingTable;
-
         public ConnectionHandler(Socket client, ServerRoutingTable serverRoutingTable)
         {
             this.client = client;
             this.serverRoutingTable = serverRoutingTable;
         }
 
+        private string SetRequestSession(IHttpRequest httpRequest)
+        {
+            string sessionId = null;
+            if (httpRequest.Cookies.ContainsCookie(HttpSessionStorage.SessionCookieKey))
+            {
+                var cookie = httpRequest.Cookies.GetCookie(HttpSessionStorage.SessionCookieKey);
+                sessionId = cookie.Value;
+                httpRequest.Session = HttpSessionStorage.GetSession(sessionId);
+            }
+            else
+            {
+                sessionId = Guid.NewGuid().ToString();
+                httpRequest.Session = HttpSessionStorage.GetSession(sessionId);
+            }
+
+            return sessionId;
+        }
+
+        private void SetResponseSession(IHttpResponse httpResponse, string sessionId)
+        {
+            if (sessionId != null)
+            {
+                httpResponse.AddCookie(new HttpCookie(HttpSessionStorage.SessionCookieKey, $"{sessionId};HttpOnly=true"));
+            }
+        }
         private async Task<IHttpRequest> ReadRequest()
         {
             var result = new StringBuilder();
@@ -64,7 +90,9 @@ namespace SIS.WebServer.Routing
             var httpRequest = await this.ReadRequest();
             if (httpRequest != null)
             {
+                var sessionId = this.SetRequestSession(httpRequest);
                 var httpResponse = this.HandleRequest(httpRequest);
+                this.SetResponseSession(httpResponse, sessionId);
                 await this.PrepareResponse(httpResponse);
             }
             this.client.Shutdown(SocketShutdown.Both);

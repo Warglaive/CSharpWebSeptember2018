@@ -7,12 +7,14 @@ using SIS.HTTP.Enums;
 using SIS.HTTP.Exceptions;
 using SIS.HTTP.Extensions;
 using SIS.HTTP.Headers;
+using SIS.HTTP.Sessions;
 
 namespace SIS.HTTP.Requests
 {
     public class HttpRequest : IHttpRequest
     {
         public IHttpCookieCollection Cookies { get; set; }
+        public IHttpSession Session { get; set; }
 
         private const char HttpRequestUrlQuerySeparator = '?';
 

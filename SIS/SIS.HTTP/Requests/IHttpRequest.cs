@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using SIS.HTTP.Cookies;
 using SIS.HTTP.Enums;
 using SIS.HTTP.Headers;
+using SIS.HTTP.Sessions;
 
 namespace SIS.HTTP.Requests
 {
@@ -19,5 +21,8 @@ namespace SIS.HTTP.Requests
         HttpRequestMethod RequestMethod { get; }
 
         void ParseCookies();
+
+        IHttpCookieCollection Cookies { get; set; }
+        IHttpSession Session { get; set; }
     }
 }
