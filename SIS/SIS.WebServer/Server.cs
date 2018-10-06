@@ -2,8 +2,9 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using SIS.WebServer.Routing;
 
-namespace SIS.WebServer.Routing
+namespace SIS.WebServer
 {
     public class Server
     {
