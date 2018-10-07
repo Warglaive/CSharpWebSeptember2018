@@ -11,7 +11,7 @@ namespace CakesWebApp.Data
         {
         }
 
-        protected CakesDbContext()
+        public CakesDbContext()
         {
         }
 
