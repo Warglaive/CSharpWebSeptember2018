@@ -18,11 +18,10 @@ namespace SIS.HTTP.Requests
 
         IHttpHeaderCollection Headers { get; }
 
+        IHttpCookieCollection Cookies { get; }
+
         HttpRequestMethod RequestMethod { get; }
 
-        void ParseCookies();
-
-        IHttpCookieCollection Cookies { get; set; }
         IHttpSession Session { get; set; }
     }
 }

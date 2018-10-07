@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using SIS.HTTP.Common;
 
 namespace SIS.HTTP.Headers
 {
@@ -15,29 +14,25 @@ namespace SIS.HTTP.Headers
 
         public void Add(HttpHeader header)
         {
+            CoreValidator.ThrowIfNull(header, nameof(header));
             this.headers.Add(header.Key, header);
         }
 
         public bool ContainsHeader(string key)
         {
-            return this.headers.Any(x => x.Key == key);
+            CoreValidator.ThrowIfNull(key, nameof(key));
+            return this.headers.ContainsKey(key);
         }
 
         public HttpHeader GetHeader(string key)
         {
-            var header = this.headers.FirstOrDefault(x => x.Key == key).Value;
-            return header;
+            CoreValidator.ThrowIfNull(key, nameof(key));
+            return this.headers.GetValueOrDefault(key, null);
         }
 
         public override string ToString()
         {
-            var result = new StringBuilder();
-            foreach (var httpHeader in this.headers)
-            {
-                result.AppendLine(httpHeader.ToString());
-            }
-
-            return result.ToString().Trim();
+            return string.Join(GlobalConstants.HttpNewLine, this.headers.Values);
         }
     }
 }
