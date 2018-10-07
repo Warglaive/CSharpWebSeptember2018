@@ -2,6 +2,7 @@
 using System.Linq;
 using CakesWebApp.Models;
 using CakesWebApp.Services;
+using SIS.HTTP.Cookies;
 using SIS.HTTP.Requests;
 using SIS.HTTP.Responses;
 using SIS.WebServer.Results;
@@ -14,6 +15,8 @@ namespace CakesWebApp.Controllers
         private const string UsernameAlreadyExists = "<h1>That username is already in use, please pick different one!</h1>";
         private const string PasswordLengthRequirement = "<h1>Please provide password longer than 6 digits!</h1>";
         private const string PassowordsDoesntMatch = "<h1>Passwords do not match!</h1>";
+        private const string InvalidUsernameOrPassword = "Invalid Username or password.";
+
 
         private IHashService hashService;
 
@@ -59,6 +62,7 @@ namespace CakesWebApp.Controllers
             var user = new User
             {
                 Name = userName,
+                Username = userName,
                 Password = hashedPassword,
             };
             try
@@ -79,6 +83,27 @@ namespace CakesWebApp.Controllers
         public IHttpResponse Login(IHttpRequest request)
         {
             return this.View("Login");
+        }
+
+        public IHttpResponse DoLogin(IHttpRequest request)
+        {
+            var username = request.FormData["username"].ToString().Trim();
+            var password = request.FormData["password"].ToString();
+            var hashedPassword = hashService.Hash(password);
+
+            var user = this.Db.Users.FirstOrDefault(x => x.Username == username
+                                                         && x.Password == hashedPassword);
+
+            if (user == null)
+            {
+                return this.BadRequestError(InvalidUsernameOrPassword);
+            }
+
+            var cookie = this.UserCookieService.GetUserCookie(user.Username);
+
+            var response = new RedirectResult("/");
+            response.Cookies.Add(new HttpCookie(".auth-cakes", cookie, 7));
+            return response;
         }
     }
 }

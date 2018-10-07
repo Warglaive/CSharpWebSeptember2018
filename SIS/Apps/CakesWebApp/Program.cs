@@ -22,6 +22,13 @@ namespace CakesWebApp
             serverRoutingTable.Routes[HttpRequestMethod.Post]["/register"] = request => new
                 AccountController().DoRegister(request);
 
+            serverRoutingTable.Routes[HttpRequestMethod.Post]["/login"] = request => new
+                AccountController().DoLogin(request);
+
+            serverRoutingTable.Routes[HttpRequestMethod.Get]["/hello"] = request => new
+                HomeController().HelloUser(request);
+
+
             var server = new Server(8000, serverRoutingTable);
             server.Run();
         }
