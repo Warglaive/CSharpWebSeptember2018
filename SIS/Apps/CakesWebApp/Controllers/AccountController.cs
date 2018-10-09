@@ -25,6 +25,11 @@ namespace CakesWebApp.Controllers
             this.hashService = new HashService();
         }
 
+        public IHttpResponse MyProfile(IHttpRequest request)
+        {
+            return this.View("Profile");
+        }
+
         public IHttpResponse Register(IHttpRequest request)
         {
             return this.View("Register");

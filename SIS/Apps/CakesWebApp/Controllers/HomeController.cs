@@ -9,6 +9,12 @@ namespace CakesWebApp.Controllers
     {
         public IHttpResponse Index(IHttpRequest request)
         {
+            if (IsAuthenticated(request))
+            {
+                var username = request.Session.GetParameter("username");
+                this.ViewBag["username"] = username.ToString();
+                return this.View("Profile");
+            }
             return this.View("Index");
         }
         public IHttpResponse HelloUser(IHttpRequest request)

@@ -28,6 +28,8 @@ namespace CakesWebApp
             serverRoutingTable.Routes[HttpRequestMethod.Get]["/hello"] = request => new
                 HomeController().HelloUser(request);
 
+            serverRoutingTable.Routes[HttpRequestMethod.Get]["/profile"] = request => new
+                AccountController().MyProfile(request);
 
             var server = new Server(8000, serverRoutingTable);
             server.Run();

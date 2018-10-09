@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using CakesWebApp.Data;
 using CakesWebApp.Services;
 using SIS.HTTP.Enums;
@@ -10,10 +11,13 @@ namespace CakesWebApp.Controllers
 {
     public abstract class BaseController
     {
+        protected IDictionary<string, string> ViewBag { get; set; }
+
         protected BaseController()
         {
             this.Db = new CakesDbContext();
             this.UserCookieService = new UserCookieService();
+            this.ViewBag = new Dictionary<string, string>();
         }
 
         protected CakesDbContext Db { get; }
@@ -35,7 +39,23 @@ namespace CakesWebApp.Controllers
         protected IHttpResponse View(string viewName)
         {
             var content = File.ReadAllText("Views/" + viewName + ".html");
+            foreach (var viewBagKey in this.ViewBag.Keys)
+            {
+                //
+                var dynamicDataPlaceholder = $"{{{viewBagKey}}}";
+
+                if (content.Contains(dynamicDataPlaceholder))
+                {
+                    content = content.Replace(dynamicDataPlaceholder, this.ViewBag[viewBagKey]);
+                }
+            }
+
             return new HtmlResult(content, HttpResponseStatusCode.Ok);
+        }
+
+        public bool IsAuthenticated(IHttpRequest request)
+        {
+            return request.Session.ContainsParameter("username");
         }
 
         protected IHttpResponse BadRequestError(string errorMessage)
