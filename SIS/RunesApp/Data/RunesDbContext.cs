@@ -16,7 +16,7 @@ namespace RunesApp.Data
         {
         }
 
-        protected RunesDbContext()
+        public RunesDbContext()
         {
         }
 

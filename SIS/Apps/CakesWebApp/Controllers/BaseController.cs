@@ -41,7 +41,6 @@ namespace CakesWebApp.Controllers
             var content = File.ReadAllText("Views/" + viewName + ".html");
             foreach (var viewBagKey in this.ViewBag.Keys)
             {
-                //
                 var dynamicDataPlaceholder = $"{{{viewBagKey}}}";
 
                 if (content.Contains(dynamicDataPlaceholder))

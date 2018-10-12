@@ -12,21 +12,34 @@ namespace RunesApp
         {
             var serverRoutingTable = new ServerRoutingTable();
 
-            serverRoutingTable.Routes[HttpRequestMethod.Get]["/"] = request => new
-                RedirectResult("/Home/Index");
-
-            serverRoutingTable.Routes[HttpRequestMethod.Get]["/Home/Index"] = request => new
-                HomeController().Index(request);
-
-            serverRoutingTable.Routes[HttpRequestMethod.Get]["/Users/Login"] =
-                request => new UsersController().Login(request);
-
-            serverRoutingTable.Routes[HttpRequestMethod.Get]["/Users/Register"] =
-                request => new UsersController().Register(request);
+            ConfigureRouting(serverRoutingTable);
 
             var server = new Server(8000, serverRoutingTable);
             server.Run();
 
+        }
+
+        private static void ConfigureRouting(ServerRoutingTable serverRoutingTable)
+        {
+            //GET
+            serverRoutingTable.Routes[HttpRequestMethod.Get]["/"] = request => new
+                RedirectResult("/home/index");
+
+            serverRoutingTable.Routes[HttpRequestMethod.Get]["/home/index"] = request => new
+                HomeController().Index(request);
+
+            serverRoutingTable.Routes[HttpRequestMethod.Get]["/users/login"] =
+                request => new UsersController().Login(request);
+
+            serverRoutingTable.Routes[HttpRequestMethod.Get]["/users/register"] =
+                request => new UsersController().Register(request);
+
+            //POST
+            serverRoutingTable.Routes[HttpRequestMethod.Post]["/users/indexloggedin"] =
+                request => new UsersController().PostLogin(request);
+
+            serverRoutingTable.Routes[HttpRequestMethod.Post]["/users/register"] =
+                request => new UsersController().PostRegister(request);
         }
     }
 }

@@ -16,10 +16,10 @@
    <ProjectReference Include="..\SIS.WebServer\SIS.WebServer.csproj" />
  </ItemGroup>
  <ItemGroup>
-   <None Update="Views\Home\Index.html">
+   <None Update="Views\Users\IndexLoggedIn.html">
      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
    </None>
-   <None Update="Views\Users\Register.html">
+   <None Update="Views\Home\Index.html">
      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
    </None>
    <None Update="Views\Users\Login.html">

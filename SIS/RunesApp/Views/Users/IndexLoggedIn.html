@@ -8,20 +8,18 @@
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 
     <meta charset="utf-8" />
-    <title>Register</title>
+    <title>Home Page</title>
 </head>
 <body>
-    <h1>Register</h1>
-    <form action="/users/register" method="post">
-        <p> Username <input type="text" name="username" value="" placeholder="Username" /></p>
-        <p>
-            Password <input type="password" name="password" value="" placeholder="Password" />
-        </p>
-
-        <p>Confirm Password <input type="password" name="confirmPassword" value="" placeholder="Confirm Password" /></p>
-
-        <p><input type="submit" name="registerSubmit" value="Register" /></p>
-
-    </form>
+    <h1>IRunes</h1>
+    <ul>
+        <li>
+            <a href="/">Home</a>
+        </li>
+    </ul>
+    <hr />
+    <h1>Welcome, {{username}}</h1>
+    <hr />
+    <footer><p><strong>CopyRight &copy; Sanity Design Studios. All rights reserved</strong></p></footer>
 </body>
 </html>

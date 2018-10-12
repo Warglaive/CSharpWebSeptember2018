@@ -7,6 +7,12 @@ namespace RunesApp.Controllers
     {
         public IHttpResponse Index(IHttpRequest request)
         {
+            if (this.IsAuthenticated(request))
+            {
+                var username = request.FormData["username"];
+                this.ViewBag["username"] = username.ToString();
+                return this.View("indexloggedin");
+            }
             return this.View();
         }
     }

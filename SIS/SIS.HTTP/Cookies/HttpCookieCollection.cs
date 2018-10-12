@@ -13,7 +13,10 @@ namespace SIS.HTTP.Cookies
         }
         public void Add(HttpCookie cookie)
         {
-            this.HttpCookies.Add(cookie.Key, cookie);
+            if (!this.ContainsCookie(cookie.Key))
+            {
+                this.HttpCookies.Add(cookie.Key, cookie);
+            }
         }
 
         public bool ContainsCookie(string key)
