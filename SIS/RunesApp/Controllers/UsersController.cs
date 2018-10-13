@@ -89,7 +89,7 @@ namespace RunesApp.Controllers
                 return this.ServerError(e.Message);
             }
 
-            var response = new RedirectResult("/users/indexloggedin");
+            var response = new RedirectResult("/indexloggedin");
             this.SignInUser(userName, response, request);
             return response;
         }

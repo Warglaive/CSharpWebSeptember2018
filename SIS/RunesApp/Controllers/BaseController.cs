@@ -14,22 +14,22 @@ namespace RunesApp.Controllers
     public abstract class BaseController
     {
         protected IDictionary<string, string> ViewBag { get; set; }
-
         protected RunesDbContext Db { get; set; }
         public HashService HashService { get; set; }
-        public UserCookieService userCookieService { get; set; }
+        public UserCookieService UserCookieService { get; set; }
+
         public BaseController()
         {
             this.Db = new RunesDbContext();
             this.HashService = new HashService();
-            this.userCookieService = new UserCookieService();
+            this.UserCookieService = new UserCookieService();
             this.ViewBag = new Dictionary<string, string>();
         }
 
         public void SignInUser(string username, IHttpResponse response, IHttpRequest request)
         {
-            request.Session.AddParameter(username, username);
-            var userCookieValue = this.userCookieService.GetUserCookie(username);
+            request.Session.AddParameter("username", username);
+            var userCookieValue = this.UserCookieService.GetUserCookie(username);
             response.AddCookie(new HttpCookie("IRunes_auth", userCookieValue));
         }
 
@@ -44,7 +44,10 @@ namespace RunesApp.Controllers
 
         protected IHttpResponse View([CallerMemberName] string viewName = "")
         {
-            var filePath = ViewsFolderName + DirectorySeparator + CurrentControllerName() + DirectorySeparator +
+            var filePath = ViewsFolderName
+                           + DirectorySeparator
+                           + CurrentControllerName()
+                           + DirectorySeparator +
                            viewName + HtmlFileExtension;
 
             if (!File.Exists(filePath))
@@ -60,7 +63,7 @@ namespace RunesApp.Controllers
 
             foreach (var viewBagKey in ViewBag.Keys)
             {
-                var dynamicPlaceholder = $"{{{viewBagKey}}}";
+                var dynamicPlaceholder = $"{{{{{viewBagKey}}}}}";
 
                 if (allContent.Contains(dynamicPlaceholder))
                 {

@@ -16,7 +16,6 @@ namespace RunesApp
 
             var server = new Server(8000, serverRoutingTable);
             server.Run();
-
         }
 
         private static void ConfigureRouting(ServerRoutingTable serverRoutingTable)
@@ -35,7 +34,7 @@ namespace RunesApp
                 request => new UsersController().Register(request);
 
             //POST
-            serverRoutingTable.Routes[HttpRequestMethod.Post]["/users/indexloggedin"] =
+            serverRoutingTable.Routes[HttpRequestMethod.Post]["/users/login"] =
                 request => new UsersController().PostLogin(request);
 
             serverRoutingTable.Routes[HttpRequestMethod.Post]["/users/register"] =

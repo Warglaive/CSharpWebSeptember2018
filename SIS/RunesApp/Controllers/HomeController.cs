@@ -9,9 +9,9 @@ namespace RunesApp.Controllers
         {
             if (this.IsAuthenticated(request))
             {
-                var username = request.FormData["username"];
+                var username = request.Session.GetParameter("username");
                 this.ViewBag["username"] = username.ToString();
-                return this.View("indexLoggedIn");
+                return this.View("IndexLoggedIn");
             }
             return this.View();
         }
