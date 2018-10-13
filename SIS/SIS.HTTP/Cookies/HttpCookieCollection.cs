@@ -1,42 +1,64 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections;
+using System.Net;
 
 namespace SIS.HTTP.Cookies
 {
+    using System.Collections.Generic;
+    using Common;
+
     public class HttpCookieCollection : IHttpCookieCollection
     {
-        private Dictionary<string, HttpCookie> HttpCookies;
+        private const string HttpCookieStringSeparator = "; ";
+
+        private readonly Dictionary<string, HttpCookie> cookies;
 
         public HttpCookieCollection()
         {
-            this.HttpCookies = new Dictionary<string, HttpCookie>();
+            this.cookies = new Dictionary<string, HttpCookie>();
         }
+
         public void Add(HttpCookie cookie)
         {
+            CoreValidator.ThrowIfNull(cookie, nameof(cookie));
             if (!this.ContainsCookie(cookie.Key))
             {
-                this.HttpCookies.Add(cookie.Key, cookie);
+                this.cookies.Add(cookie.Key, cookie);
             }
         }
 
         public bool ContainsCookie(string key)
         {
-            return this.HttpCookies.Any(x => x.Key == key);
+            CoreValidator.ThrowIfNull(key, nameof(key));
+            return this.cookies.ContainsKey(key);
         }
 
         public HttpCookie GetCookie(string key)
         {
-            return this.HttpCookies.First(x => x.Key == key).Value;
+            CoreValidator.ThrowIfNull(key, nameof(key));
+            return this.cookies.GetValueOrDefault(key, null);
         }
 
         public bool HasCookies()
         {
-            return this.HttpCookies.Any();
+            return this.cookies.Count > 0;
+        }
+
+        public IEnumerator<HttpCookie> GetEnumerator()
+        {
+            foreach (var cookie in this.cookies)
+            {
+                yield return cookie.Value;
+            }
         }
 
         public override string ToString()
         {
-            return string.Join("; ", this.HttpCookies.Values);
+            return string.Join(HttpCookieStringSeparator, this.cookies.Values);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

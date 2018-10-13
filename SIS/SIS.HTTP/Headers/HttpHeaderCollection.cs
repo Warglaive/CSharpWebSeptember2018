@@ -10,7 +10,7 @@ namespace SIS.HTTP.Headers
         public HttpHeaderCollection()
         {
             this.headers = new Dictionary<string, HttpHeader>();
-        }
+        }   
 
         public void Add(HttpHeader header)
         {

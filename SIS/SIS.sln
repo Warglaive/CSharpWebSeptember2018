@@ -7,13 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIS.HTTP", "SIS.HTTP\SIS.HT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIS.WebServer", "SIS.WebServer\SIS.WebServer.csproj", "{AD0BE0D4-4164-460A-BCE0-869F540C539A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIS.Demo", "SIS.Demo\SIS.Demo.csproj", "{4D816AD9-C96F-4805-834A-B2032DB7102B}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{5F8EEC19-1063-4045-9F68-F467691FC476}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CakesWebApp", "Apps\CakesWebApp\CakesWebApp.csproj", "{091D6F1C-699B-4B05-948F-A47442D6B43C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunesApp", "RunesApp\RunesApp.csproj", "{73A5F5B2-6BC1-4AC9-B057-A36B0EBC72B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RunesApp", "RunesApp\RunesApp.csproj", "{73A5F5B2-6BC1-4AC9-B057-A36B0EBC72B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,14 +23,6 @@ Global
 		{AD0BE0D4-4164-460A-BCE0-869F540C539A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD0BE0D4-4164-460A-BCE0-869F540C539A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD0BE0D4-4164-460A-BCE0-869F540C539A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4D816AD9-C96F-4805-834A-B2032DB7102B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4D816AD9-C96F-4805-834A-B2032DB7102B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4D816AD9-C96F-4805-834A-B2032DB7102B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4D816AD9-C96F-4805-834A-B2032DB7102B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{091D6F1C-699B-4B05-948F-A47442D6B43C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{091D6F1C-699B-4B05-948F-A47442D6B43C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{091D6F1C-699B-4B05-948F-A47442D6B43C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{091D6F1C-699B-4B05-948F-A47442D6B43C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{73A5F5B2-6BC1-4AC9-B057-A36B0EBC72B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{73A5F5B2-6BC1-4AC9-B057-A36B0EBC72B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73A5F5B2-6BC1-4AC9-B057-A36B0EBC72B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -44,9 +30,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{091D6F1C-699B-4B05-948F-A47442D6B43C} = {5F8EEC19-1063-4045-9F68-F467691FC476}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A604AD4C-AAC4-4D36-A62B-8D4A3E029226}

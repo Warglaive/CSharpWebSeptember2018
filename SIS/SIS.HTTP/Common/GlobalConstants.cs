@@ -8,6 +8,6 @@
 
         public const string HttpNewLine = "\r\n";
 
-        public static readonly string[] ResourceExtensions = { ".js", ".css" };
+        public static string[] ResourceExtensions = {".js", ".css"};
     }
 }
