@@ -11,7 +11,7 @@ namespace RunesApp.Controllers
             {
                 var username = request.FormData["username"];
                 this.ViewBag["username"] = username.ToString();
-                return this.View("indexloggedin");
+                return this.View("indexLoggedIn");
             }
             return this.View();
         }

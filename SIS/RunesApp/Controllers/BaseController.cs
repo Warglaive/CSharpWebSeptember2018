@@ -38,6 +38,8 @@ namespace RunesApp.Controllers
         private const string DirectorySeparator = "/";
         private const string ViewsFolderName = "Views";
         private const string HtmlFileExtension = ".html";
+        private const string RenderBodyDefaultName = "@RenderBody()";
+
         private string CurrentControllerName() => this.GetType().Name.Replace(ControllerDefaultName, string.Empty);
 
         protected IHttpResponse View([CallerMemberName] string viewName = "")
@@ -50,19 +52,23 @@ namespace RunesApp.Controllers
                 return new BadRequestResult($"view: {viewName} not found", HttpResponseStatusCode.NotFound);
             }
 
+            var layoutContent = File.ReadAllText(ViewsFolderName + DirectorySeparator + "_Layout.html");
+
             var fileContent = File.ReadAllText(filePath);
+
+            var allContent = layoutContent.Replace(RenderBodyDefaultName, fileContent);
 
             foreach (var viewBagKey in ViewBag.Keys)
             {
                 var dynamicPlaceholder = $"{{{viewBagKey}}}";
 
-                if (fileContent.Contains(dynamicPlaceholder))
+                if (allContent.Contains(dynamicPlaceholder))
                 {
-                    fileContent = fileContent.Replace(dynamicPlaceholder, this.ViewBag[viewBagKey]);
+                    allContent = allContent.Replace(dynamicPlaceholder, this.ViewBag[viewBagKey]);
                 }
             }
 
-            return new HtmlResult(fileContent, HttpResponseStatusCode.Ok);
+            return new HtmlResult(allContent, HttpResponseStatusCode.Ok);
         }
         public bool IsAuthenticated(IHttpRequest request)
         {

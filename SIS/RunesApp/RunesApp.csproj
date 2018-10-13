@@ -16,6 +16,9 @@
    <ProjectReference Include="..\SIS.WebServer\SIS.WebServer.csproj" />
  </ItemGroup>
  <ItemGroup>
+   <None Update="Views\_Layout.html">
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </None>
    <None Update="Views\Users\IndexLoggedIn.html">
      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
    </None>

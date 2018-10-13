@@ -28,8 +28,8 @@ namespace RunesApp.Controllers
 
             var hashedPassword = new HashService().Hash(password);
 
-            var user = this.Db.Users.FirstOrDefault(x => x.Username == username && x.Password == hashedPassword);
-
+            var user = this.Db.Users.FirstOrDefault(x => x.Username == username
+                                                         && x.Password == hashedPassword);
             if (user == null)
             {
                 return new RedirectResult("/login");
@@ -38,7 +38,6 @@ namespace RunesApp.Controllers
             this.SignInUser(username, response, request);
             //to logged in html
             return response;
-
         }
         public IHttpResponse Register(IHttpRequest request)
         {
@@ -73,6 +72,7 @@ namespace RunesApp.Controllers
             }
             ////Hash password
             var hashedPassword = this.HashService.Hash(password);
+            this.Db.ChangeTracker.AutoDetectChangesEnabled = false;
             var user = new User
             {
                 Username = userName,
@@ -89,7 +89,7 @@ namespace RunesApp.Controllers
                 return this.ServerError(e.Message);
             }
 
-            var response = new RedirectResult("/");
+            var response = new RedirectResult("/users/indexloggedin");
             this.SignInUser(userName, response, request);
             return response;
         }
