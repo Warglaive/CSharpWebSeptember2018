@@ -13,78 +13,101 @@ namespace RunesApp.Controllers
 {
     public abstract class BaseController
     {
-        protected IDictionary<string, string> ViewBag { get; set; }
+        private const string RootDirectoryRelativePath = "../../../";
+
+        private const string ControllerDefaultName = "Controller";
+
+        private const string DirectorySeparator = "/";
+
+        private const string ViewsFolderName = "Views";
+
+        private const string HtmlFileExtension = ".html";
+
+        private const string LayoutViewFileName = "_Layout";
+
+        private const string RenderBodyConstant = "@RenderBody()";
+
         protected RunesDbContext Db { get; set; }
-        public HashService HashService { get; set; }
-        public UserCookieService UserCookieService { get; set; }
+
+        private readonly UserCookieService cookieService;
+
+        protected IDictionary<string, string> ViewBag { get; set; }
 
         public BaseController()
         {
             this.Db = new RunesDbContext();
-            this.HashService = new HashService();
-            this.UserCookieService = new UserCookieService();
+            this.cookieService = new UserCookieService();
             this.ViewBag = new Dictionary<string, string>();
         }
 
-        public void SignInUser(string username, IHttpResponse response, IHttpRequest request)
-        {
-            request.Session.AddParameter("username", username);
-            var userCookieValue = this.UserCookieService.GetUserCookie(username);
-            response.AddCookie(new HttpCookie("IRunes_auth", userCookieValue));
-        }
-
-        // private const string RootDirectoryRelativePath = "../../../";
-        private const string ControllerDefaultName = "Controller";
-        private const string DirectorySeparator = "/";
-        private const string ViewsFolderName = "Views";
-        private const string HtmlFileExtension = ".html";
-        private const string RenderBodyDefaultName = "@RenderBody()";
-
-        private string CurrentControllerName() => this.GetType().Name.Replace(ControllerDefaultName, string.Empty);
-
-        protected IHttpResponse View([CallerMemberName] string viewName = "")
-        {
-            var filePath = ViewsFolderName
-                           + DirectorySeparator
-                           + CurrentControllerName()
-                           + DirectorySeparator +
-                           viewName + HtmlFileExtension;
-
-            if (!File.Exists(filePath))
-            {
-                return new BadRequestResult($"view: {viewName} not found", HttpResponseStatusCode.NotFound);
-            }
-
-            var layoutContent = File.ReadAllText(ViewsFolderName + DirectorySeparator + "_Layout.html");
-
-            var fileContent = File.ReadAllText(filePath);
-
-            var allContent = layoutContent.Replace(RenderBodyDefaultName, fileContent);
-
-            foreach (var viewBagKey in ViewBag.Keys)
-            {
-                var dynamicPlaceholder = $"{{{{{viewBagKey}}}}}";
-
-                if (allContent.Contains(dynamicPlaceholder))
-                {
-                    allContent = allContent.Replace(dynamicPlaceholder, this.ViewBag[viewBagKey]);
-                }
-            }
-
-            return new HtmlResult(allContent, HttpResponseStatusCode.Ok);
-        }
         public bool IsAuthenticated(IHttpRequest request)
         {
             return request.Session.ContainsParameter("username");
         }
 
-        protected IHttpResponse BadRequestError(string errorMessage)
+        public void SignInUser(
+            string username,
+            IHttpResponse response,
+            IHttpRequest request)
         {
-            return new HtmlResult(errorMessage, HttpResponseStatusCode.BadRequest);
+            request.Session.AddParameter("username", username);
+            var userCookieValue = this.cookieService.GetUserCookie(username);
+            response.Cookies.Add(new HttpCookie("IRunes_auth", userCookieValue));
         }
-        protected IHttpResponse ServerError(string errorMessage)
+
+        private string GetCurrentControllerName() =>
+            this.GetType().Name.Replace(ControllerDefaultName, string.Empty);
+
+        protected IHttpResponse View([CallerMemberName] string viewName = "")
         {
-            return new HtmlResult(errorMessage, HttpResponseStatusCode.InternalServerError);
+            var layoutView = //RootDirectoryRelativePath +
+                ViewsFolderName +
+                DirectorySeparator +
+                LayoutViewFileName +
+                HtmlFileExtension;
+
+            string filePath = //RootDirectoryRelativePath +
+                ViewsFolderName +
+                DirectorySeparator +
+                this.GetCurrentControllerName() +
+                DirectorySeparator +
+                viewName +
+                HtmlFileExtension;
+
+            if (!File.Exists(filePath))
+            {
+                return new BadRequestResult(
+                    $"View {viewName} not found.",
+                    HttpResponseStatusCode.NotFound);
+            }
+
+            var viewContent = BuildViewContent(filePath);
+
+
+            var viewLayout = File.ReadAllText(layoutView);
+            var view = viewLayout.Replace(RenderBodyConstant, viewContent);
+
+            var response = new HtmlResult(view, HttpResponseStatusCode.Ok);
+
+            return response;
+        }
+
+        private string BuildViewContent(string filePath)
+        {
+            var viewContent = File.ReadAllText(filePath);
+
+            foreach (var viewBagKey in ViewBag.Keys)
+            {
+                var dynamicDataPlaceholder = $"{{{{{viewBagKey}}}}}";
+                if (viewContent.Contains(dynamicDataPlaceholder))
+                {
+                    viewContent = viewContent.Replace(
+                        dynamicDataPlaceholder,
+                        this.ViewBag[viewBagKey]);
+                }
+            }
+
+            return viewContent;
         }
     }
 }
