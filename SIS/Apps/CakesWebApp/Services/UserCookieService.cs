@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -7,11 +8,11 @@ namespace CakesWebApp.Services
 {
     public class UserCookieService : IUserCookieService
     {
-        public const string EncryptKey = "E746C8DF278CD5931069B522E695D4F3";
+        public const string EncryptKey = "E646C8DF278CD5931069B522E695D4F2";
 
-        public string GetUserCookie(string username)
+        public string GetUserCookie(string userName)
         {
-            var cookieContent = EncryptString(username, EncryptKey);
+            var cookieContent = EncryptString(userName, EncryptKey);
             return cookieContent;
         }
 
@@ -83,5 +84,12 @@ namespace CakesWebApp.Services
                 }
             }
         }
+    }
+
+    public interface IUserCookieService
+    {
+        string GetUserCookie(string userName);
+
+        string GetUserData(string cookieContent);
     }
 }

@@ -38,13 +38,17 @@ namespace CakesWebApp.Migrations
 
             modelBuilder.Entity("CakesWebApp.Models.OrderProduct", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<int>("OrderId");
 
                     b.Property<int>("ProductId");
 
-                    b.Property<int>("Id");
+                    b.HasKey("Id");
 
-                    b.HasKey("OrderId", "ProductId");
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("ProductId");
 
@@ -57,17 +61,13 @@ namespace CakesWebApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ImgUrl");
+                    b.Property<string>("ImageUrl");
 
                     b.Property<string>("Name");
-
-                    b.Property<int>("OrderId");
 
                     b.Property<decimal>("Price");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
 
                     b.ToTable("Products");
                 });
@@ -104,19 +104,11 @@ namespace CakesWebApp.Migrations
                     b.HasOne("CakesWebApp.Models.Order", "Order")
                         .WithMany("Products")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CakesWebApp.Models.Product", "Product")
                         .WithMany("Orders")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("CakesWebApp.Models.Product", b =>
-                {
-                    b.HasOne("CakesWebApp.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

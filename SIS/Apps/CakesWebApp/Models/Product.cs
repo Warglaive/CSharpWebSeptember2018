@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace CakesWebApp.Models
 {
@@ -8,13 +9,12 @@ namespace CakesWebApp.Models
         {
             this.Orders = new HashSet<OrderProduct>();
         }
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public decimal Price { get; set; }
-        public string ImgUrl { get; set; }
 
-        public int OrderId { get; set; }
-        public Order Order { get; set; }
+        public string Name { get; set; }
+
+        public decimal Price { get; set; }
+
+        public string ImageUrl { get; set; }
 
         public virtual ICollection<OrderProduct> Orders { get; set; }
     }

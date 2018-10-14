@@ -1,33 +1,24 @@
 ﻿using System;
+using CakesWebApp.Data;
+using Microsoft.EntityFrameworkCore.Internal;
+using SIS.HTTP.Enums;
+using SIS.HTTP.Requests;
+using SIS.HTTP.Responses;
+using SIS.WebServer.Results;
 using System.Linq;
 using CakesWebApp.Models;
 using CakesWebApp.Services;
 using SIS.HTTP.Cookies;
-using SIS.HTTP.Requests;
-using SIS.HTTP.Responses;
-using SIS.WebServer.Results;
 
 namespace CakesWebApp.Controllers
 {
     public class AccountController : BaseController
     {
-        private const string InvalidUsernameMessage = "<h1>Please provide valid username with length of 4 or more characters!</h1>";
-        private const string UsernameAlreadyExists = "<h1>That username is already in use, please pick different one!</h1>";
-        private const string PasswordLengthRequirement = "<h1>Please provide password longer than 6 digits!</h1>";
-        private const string PassowordsDoesntMatch = "<h1>Passwords do not match!</h1>";
-        private const string InvalidUsernameOrPassword = "Invalid Username or password.";
-
-
         private IHashService hashService;
 
         public AccountController()
         {
             this.hashService = new HashService();
-        }
-
-        public IHttpResponse MyProfile(IHttpRequest request)
-        {
-            return this.View("Profile");
         }
 
         public IHttpResponse Register(IHttpRequest request)
@@ -37,53 +28,58 @@ namespace CakesWebApp.Controllers
 
         public IHttpResponse DoRegister(IHttpRequest request)
         {
-            //// return new HtmlResult("REGISTERED", HttpResponseStatusCode.Ok);
-
             var userName = request.FormData["username"].ToString().Trim();
             var password = request.FormData["password"].ToString();
             var confirmPassword = request.FormData["confirmPassword"].ToString();
 
+            // Validate
             if (string.IsNullOrWhiteSpace(userName) || userName.Length < 4)
             {
-                return this.BadRequestError(InvalidUsernameMessage);
+                return this.BadRequestError("Please provide valid username with length of 4 or more characters.");
             }
 
             if (this.Db.Users.Any(x => x.Username == userName))
             {
-                return BadRequestError(UsernameAlreadyExists);
+                return this.BadRequestError("User with the same name already exists.");
             }
 
             if (string.IsNullOrWhiteSpace(password) || password.Length < 6)
             {
-                return this.BadRequestError(PasswordLengthRequirement);
+                return this.BadRequestError("Please provide password of length 6 or more.");
             }
 
             if (password != confirmPassword)
             {
-                return this.BadRequestError(PassowordsDoesntMatch);
+                return this.BadRequestError("Passwords do not match.");
             }
-            ////Hash password
+
+            // Hash password
             var hashedPassword = this.hashService.Hash(password);
+
+            // Create user
             var user = new User
             {
                 Name = userName,
                 Username = userName,
                 Password = hashedPassword,
             };
+            this.Db.Users.Add(user);
+
             try
             {
-                this.Db.Users.Add(user);
                 this.Db.SaveChanges();
             }
             catch (Exception e)
             {
-                ////TODO: Log error
+                // TODO: Log error
                 return this.ServerError(e.Message);
             }
 
+            // TODO: Login
+
+            // Redirect
             return new RedirectResult("/");
         }
-
 
         public IHttpResponse Login(IHttpRequest request)
         {
@@ -92,22 +88,39 @@ namespace CakesWebApp.Controllers
 
         public IHttpResponse DoLogin(IHttpRequest request)
         {
-            var username = request.FormData["username"].ToString().Trim();
+            var userName = request.FormData["username"].ToString().Trim();
             var password = request.FormData["password"].ToString();
-            var hashedPassword = hashService.Hash(password);
 
-            var user = this.Db.Users.FirstOrDefault(x => x.Username == username
-                                                         && x.Password == hashedPassword);
+            var hashedPassword = this.hashService.Hash(password);
+
+            var user = this.Db.Users.FirstOrDefault(x => 
+                x.Username == userName &&
+                x.Password == hashedPassword);
 
             if (user == null)
             {
-                return this.BadRequestError(InvalidUsernameOrPassword);
+                return this.BadRequestError("Invalid username or password.");
             }
 
-            var cookie = this.UserCookieService.GetUserCookie(user.Username);
+            var cookieContent = this.UserCookieService.GetUserCookie(user.Username);
 
             var response = new RedirectResult("/");
-            response.Cookies.Add(new HttpCookie(".auth-cakes", cookie, 7));
+            var cookie = new HttpCookie(".auth-cakes", cookieContent, 7) { HttpOnly = true };
+            response.Cookies.Add(cookie);
+            return response;
+        }
+
+        public IHttpResponse Logout(IHttpRequest request)
+        {
+            if (!request.Cookies.ContainsCookie(".auth-cakes"))
+            {
+                return new RedirectResult("/");
+            }
+
+            var cookie = request.Cookies.GetCookie(".auth-cakes");
+            cookie.Delete();
+            var response = new RedirectResult("/");
+            response.Cookies.Add(cookie);
             return response;
         }
     }

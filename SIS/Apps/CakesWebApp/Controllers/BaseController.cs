@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using CakesWebApp.Data;
 using CakesWebApp.Services;
 using SIS.HTTP.Enums;
@@ -11,16 +13,14 @@ namespace CakesWebApp.Controllers
 {
     public abstract class BaseController
     {
-        protected IDictionary<string, string> ViewBag { get; set; }
-
         protected BaseController()
         {
             this.Db = new CakesDbContext();
             this.UserCookieService = new UserCookieService();
-            this.ViewBag = new Dictionary<string, string>();
         }
 
         protected CakesDbContext Db { get; }
+        
         protected IUserCookieService UserCookieService { get; }
 
         protected string GetUsername(IHttpRequest request)
@@ -32,38 +32,52 @@ namespace CakesWebApp.Controllers
 
             var cookie = request.Cookies.GetCookie(".auth-cakes");
             var cookieContent = cookie.Value;
-            var username = this.UserCookieService.GetUserData(cookieContent);
-            return username;
+            var userName = this.UserCookieService.GetUserData(cookieContent);
+            return userName;
+
         }
 
-        protected IHttpResponse View(string viewName)
+        protected IHttpResponse View(string viewName, IDictionary<string, string> viewBag = null)
         {
-            var content = File.ReadAllText("Views/" + viewName + ".html");
-            foreach (var viewBagKey in this.ViewBag.Keys)
+            if (viewBag == null)
             {
-                var dynamicDataPlaceholder = $"{{{viewBagKey}}}";
-
-                if (content.Contains(dynamicDataPlaceholder))
-                {
-                    content = content.Replace(dynamicDataPlaceholder, this.ViewBag[viewBagKey]);
-                }
+                viewBag = new Dictionary<string, string>();
             }
 
-            return new HtmlResult(content, HttpResponseStatusCode.Ok);
-        }
-
-        public bool IsAuthenticated(IHttpRequest request)
-        {
-            return request.Session.ContainsParameter("username");
+            var allContent = this.GetViewContent(viewName, viewBag);
+            return new HtmlResult(allContent, HttpResponseStatusCode.Ok);
         }
 
         protected IHttpResponse BadRequestError(string errorMessage)
         {
-            return new HtmlResult(errorMessage, HttpResponseStatusCode.BadRequest);
+            var viewBag = new Dictionary<string, string>();
+            viewBag.Add("Error", errorMessage);
+            var allContent = this.GetViewContent("Error", viewBag);
+
+            return new HtmlResult(allContent, HttpResponseStatusCode.BadRequest);
         }
+
         protected IHttpResponse ServerError(string errorMessage)
         {
-            return new HtmlResult(errorMessage, HttpResponseStatusCode.InternalServerError);
+            var viewBag = new Dictionary<string, string>();
+            viewBag.Add("Error", errorMessage);
+            var allContent = this.GetViewContent("Error", viewBag);
+
+            return new HtmlResult(allContent, HttpResponseStatusCode.InternalServerError);
+        }
+
+        private string GetViewContent(string viewName, 
+            IDictionary<string, string> viewBag)
+        {
+            var layoutContent = File.ReadAllText("Views/_Layout.html");
+            var content = File.ReadAllText("Views/" + viewName + ".html");
+            foreach (var item in viewBag)
+            {
+                content = content.Replace("@Model." + item.Key, item.Value);
+            }
+
+            var allContent = layoutContent.Replace("@RenderBody()", content);
+            return allContent;
         }
     }
 }

@@ -23,6 +23,11 @@ namespace SIS.WebServer
 
         private readonly ServerRoutingTable serverRoutingTable;
 
+        private const string ResourceFolderName = "Resources";
+        private const string CssFolderName = "css";
+        private const string JsFolderName = "js";
+        private const string DirDelimiter = "/";
+
         private const string RootDirectoryRelativePath = "../../..";
 
         public ConnectionHandler(
@@ -69,18 +74,30 @@ namespace SIS.WebServer
 
         private IHttpResponse HandleRequest(IHttpRequest httpRequest)
         {
-            var isResourceRequest = this.IsResourceRequest(httpRequest);
-            if (isResourceRequest)
-            {
-                return this.HandleRequestResponse(httpRequest.Path);
-            }
             if (!this.serverRoutingTable.Routes.ContainsKey(httpRequest.RequestMethod)
-                || !this.serverRoutingTable.Routes[httpRequest.RequestMethod].ContainsKey(httpRequest.Path.ToLower()))
+            || !this.serverRoutingTable.Routes[httpRequest.RequestMethod].ContainsKey(httpRequest.Path))
             {
-                return new HttpResponse(HttpResponseStatusCode.NotFound);
+                return this.ReturnIfResource(httpRequest.Path);
+            }
+            return this.serverRoutingTable.Routes[httpRequest.RequestMethod][httpRequest.Path].Invoke(httpRequest);
+        }
+
+        public IHttpResponse ReturnIfResource(string resourceName)
+        {
+            var filePath = ResourceFolderName + DirDelimiter + JsFolderName + resourceName;
+            var neededFolder = resourceName.Substring(resourceName.Length - 3);
+            if (neededFolder == "css")
+            {
+                filePath = ResourceFolderName + DirDelimiter + CssFolderName + resourceName;
+            }
+            if (File.Exists(filePath))
+            {
+                var file = File.ReadAllText(filePath);
+                var arr = Encoding.UTF8.GetBytes(file);
+                return new InlineResouceResponse(arr, HttpResponseStatusCode.Ok);
             }
 
-            return this.serverRoutingTable.Routes[httpRequest.RequestMethod][httpRequest.Path].Invoke(httpRequest);
+            return new HttpResponse(HttpResponseStatusCode.NotFound);
         }
 
         private IHttpResponse HandleRequestResponse(string httpRequestPath)
@@ -107,7 +124,7 @@ namespace SIS.WebServer
 
             var fileContent = File.ReadAllBytes(resourcePath);
 
-            return new InlineResouceResult(fileContent, HttpResponseStatusCode.Ok);
+            return new InlineResouceResponse(fileContent, HttpResponseStatusCode.Ok);
         }
 
         private bool IsResourceRequest(IHttpRequest httpRequest)

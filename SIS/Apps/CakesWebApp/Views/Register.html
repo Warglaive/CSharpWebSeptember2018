@@ -1,22 +1,28 @@
-﻿<!DOCTYPE html>
+﻿<h1>Register</h1>
+<form method="post" action="/register">
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title>Register</title>
-</head>
-<body>
-    <h1>Register</h1>
-    <form action="/register" method="post">
-        <p> Username <input type="text" name="username" value="" placeholder="Username" /></p>
-        <p>
-            Password <input type="password" name="password" value="" placeholder="Password" />
-        </p>
-
-        <p>Confirm Password <input type="password" name="confirmPassword" value="" placeholder="Confirm Password" /></p>
-
-        <p><input type="submit" name="registerSubmit" value="Register" /></p>
-
-    </form>
-</body>
-</html>
+    <div class="form-group row">
+        <label class="form-control-label col-sm-2">Username:</label>
+        <div class="col-sm-4">
+            <input class="form-control" name="username" type="text"
+                   placeholder="Username" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-sm-2">Password:</label>
+        <div class="col-sm-4">
+            <input class="form-control" name="password" type="password"
+                   placeholder="Password" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-sm-2">Confirm password:</label>
+        <div class="col-sm-4">
+            <input class="form-control" name="confirmPassword" type="password"
+                   placeholder="Confirm Password" />
+        </div>
+    </div>
+    <div>
+        <input type="submit" value="Register" class="btn btn-primary" />
+    </div>
+</form>
