@@ -1,9 +1,4 @@
-﻿using System;
-using System.Linq;
-using IRunesWebApp.Models;
-using Services;
-using SIS.HTTP.Cookies;
-using SIS.HTTP.Enums;
+﻿using System.Linq;
 using SIS.HTTP.Requests;
 using SIS.HTTP.Responses;
 using SIS.WebServer.Results;
