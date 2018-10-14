@@ -80,6 +80,7 @@ div .loginForm {
 
 form {
     display: block;
+    text-align: center;
 }
 
 .container-fluid {
@@ -103,4 +104,8 @@ form {
     color: white;
     border-radius: 7px;
     border-color: #53b86a;
+}
+
+label {
+    color: black;
 }

@@ -1,26 +1,18 @@
-﻿<h1>IRunes</h1>
-<ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="/users/login">Login</a></li>
-    <li><a href="/users/register">Register</a></li>
-</ul>
-<hr />
-<h1>Register</h1>
+﻿<hr />
+<h1 class="loginHeading">Register</h1>
+<hr class="hr" style="height: 2px" />
 <form method="post" action="/users/register">
-    <div>
-        Username <input name="username" type="text"
-                        placeholder="Username" />
+    <div class="col-md-2">
+        <label>Username/Email</label> <input class="usernameInput" type="text" name="username" placeholder="Username/Email..." />
     </div>
-    <div>
-        Password <input name="password" type="password"
-                        placeholder="Password" />
+    <div class="col-md-2">
+        <label>Password</label> <input class="passwordInput" type="Password" name="password" placeholder="Password..." />
+    </div><div class="col-md-2">
+        <label>Confirm Password</label> <input class="CpasswordInput" type="Password" name="confirmPassword" placeholder="Confirm Password..." />
     </div>
-    <div>
-        Confirm password <input name="confirmPassword" type="password"
-                                placeholder="Confirm Password" />
+
+    <div class="col-md-2">
+        <label>Email</label> <input class="emailInput" type="Password" name="email" placeholder="Email..." />
     </div>
-    <div>
-        <input type="submit" value="Register" />
-    </div>
+    <input type="submit" value="Register" />
 </form>
-<hr />
