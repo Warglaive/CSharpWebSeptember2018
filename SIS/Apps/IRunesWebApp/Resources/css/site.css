@@ -109,3 +109,7 @@ form {
 label {
     color: black;
 }
+
+.usernameLoggedIn {
+    color: #FEC108;
+}
