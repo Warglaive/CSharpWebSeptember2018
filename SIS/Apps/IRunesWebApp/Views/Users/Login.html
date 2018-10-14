@@ -1,10 +1,16 @@
-﻿<h1>Login</h1>
-<form method="post" action="/users/login">
-    <div>
-        Username/Email <input type="text" name="username"/>
+﻿<div class="row">
+    <div class="jumbotron col-md-12">
+        <div class="heading-container bottom-buffer-md">
+            <h1>Login</h1>
+            <form method="post" action="/users/login">
+                <div>
+                    Username/Email <input type="text" name="username"/>
+                </div>
+                <div>
+                    Password <input type="Password" name="password"/>
+                </div>  
+                <input type="submit" value="Login"/>
+            </form>
+        </div>
     </div>
-    <div>
-        Password <input type="Password" name="password"/>
-    </div>  
-    <input type="submit" value="Login"/>
-</form>
+</div>

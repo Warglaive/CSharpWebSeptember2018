@@ -84,6 +84,10 @@ namespace SIS.WebServer
 
         public IHttpResponse ReturnIfResource(string resourceName)
         {
+            //1.take needed folder(users/home or album)
+            //take filePath(css or other)
+            //set directory to CSS or JS folders
+
             var filePath = ResourceFolderName + DirDelimiter + JsFolderName + resourceName;
             var neededFolder = resourceName.Substring(resourceName.Length - 3);
             if (neededFolder == "css")
