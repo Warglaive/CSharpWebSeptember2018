@@ -77,7 +77,7 @@ namespace SIS.WebServer
             if (!this.serverRoutingTable.Routes.ContainsKey(httpRequest.RequestMethod)
             || !this.serverRoutingTable.Routes[httpRequest.RequestMethod].ContainsKey(httpRequest.Path))
             {
-                return this.ReturnIfResource(httpRequest.Path);
+                return this.HandleRequestResponse(httpRequest.Path);
             }
             return this.serverRoutingTable.Routes[httpRequest.RequestMethod][httpRequest.Path].Invoke(httpRequest);
         }
@@ -87,7 +87,6 @@ namespace SIS.WebServer
             //1.take needed folder(users/home or album)
             //take filePath(css or other)
             //set directory to CSS or JS folders
-
             var filePath = ResourceFolderName + DirDelimiter + JsFolderName + resourceName;
             var neededFolder = resourceName.Substring(resourceName.Length - 3);
             if (neededFolder == "css")
@@ -116,8 +115,7 @@ namespace SIS.WebServer
                 .Substring(
                     indexOfStartOfNameOfResource);
 
-            var resourcePath = RootDirectoryRelativePath
-                + "/Resources"
+            var resourcePath = ResourceFolderName
                 + $"/{requestPathExtension.Substring(1)}"
                 + resourceName;
 

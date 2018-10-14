@@ -84,7 +84,6 @@ namespace IRunesWebApp.Controllers
 
             var viewContent = BuildViewContent(filePath);
 
-
             var viewLayout = File.ReadAllText(layoutView);
             var view = viewLayout.Replace(RenderBodyConstant, viewContent);
 

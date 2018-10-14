@@ -40,22 +40,67 @@ footer {
 }
 
 .navbar {
-    background-color: green; 
+    background-color: green;
 }
 
 .nav-link {
     color: white;
     text-decoration: none;
 }
-.nav-link:hover {
-    color: white;
-}
+
+    .nav-link:hover {
+        color: white;
+    }
 
 .navbar-brand {
     color: whitesmoke;
 }
 
 .jumbotron {
-    background-color: green;
+    background-color: #28A745;
 }
 
+.loginHeading {
+    color: #53B86A;
+    text-align: center;
+}
+
+div .loginForm {
+    color: #969696;
+    text-align: center;
+}
+
+.heading-container bottom-buffer-md {
+    text-align: center;
+}
+
+.hr {
+    background-color: #28A745;
+}
+
+form {
+    display: block;
+}
+
+.container-fluid {
+    width: 80%;
+}
+
+.col-md-2 {
+    width: 100%;
+}
+
+.usernameInput {
+    margin: 10px;
+}
+
+.passwordInput {
+    margin: 10px;
+}
+
+[type=reset], [type=submit], button, html [type=button] {
+    background-color: #53b86a;
+    color: white;
+    border-radius: 7px;
+    border-color: #53b86a;
+}
