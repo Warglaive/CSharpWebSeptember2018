@@ -8,7 +8,7 @@ using SIS.MvcFramework.Services;
 
 namespace SIS.MvcFramework
 {
-    public class Controller
+    public abstract class Controller
     {
         protected Controller()
         {
@@ -16,23 +16,26 @@ namespace SIS.MvcFramework
             this.Response = new HttpResponse(statusCode: HttpResponseStatusCode.Ok);
         }
 
-        public IHttpRequest Request { get; set; }
-        public IHttpResponse Response { get; set; }
+        protected internal IHttpRequest Request { get; set; }
+        protected IHttpResponse Response { get; set; }
+
+        protected string User
+        {
+            get
+            {
+                if (!this.Request.Cookies.ContainsCookie(".auth-cakes"))
+                {
+                    return null;
+                }
+
+                var cookie = this.Request.Cookies.GetCookie(".auth-cakes");
+                var cookieContent = cookie.Value;
+                var userName = this.UserCookieService.GetUserData(cookieContent);
+                return userName;
+            }
+        }
 
         protected IUserCookieService UserCookieService { get; }
-
-        protected string GetUsername()
-        {
-            if (!this.Request.Cookies.ContainsCookie(".auth-cakes"))
-            {
-                return null;
-            }
-
-            var cookie = this.Request.Cookies.GetCookie(".auth-cakes");
-            var cookieContent = cookie.Value;
-            var userName = this.UserCookieService.GetUserData(cookieContent);
-            return userName;
-        }
 
         protected IHttpResponse View(string viewName, IDictionary<string, string> viewBag = null)
         {

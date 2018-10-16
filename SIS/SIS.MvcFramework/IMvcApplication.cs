@@ -1,10 +1,8 @@
-﻿using SIS.WebServer.Routing;
-
-namespace SIS.MvcFramework
+﻿namespace SIS.MvcFramework
 {
     public interface IMvcApplication
     {
-        void Configure(ServerRoutingTable routing);
+        void Configure();
         void ConfigureServices();
     }
 }
