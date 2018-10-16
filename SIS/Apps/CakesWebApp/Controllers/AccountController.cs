@@ -74,7 +74,7 @@ namespace CakesWebApp.Controllers
             // TODO: Login
 
             // Redirect
-            return new RedirectResult("/");
+            return this.Redirect("/");
         }
 
         public IHttpResponse Login()
@@ -89,7 +89,7 @@ namespace CakesWebApp.Controllers
 
             var hashedPassword = this.hashService.Hash(password);
 
-            var user = this.Db.Users.FirstOrDefault(x => 
+            var user = this.Db.Users.FirstOrDefault(x =>
                 x.Username == userName &&
                 x.Password == hashedPassword);
 
@@ -110,7 +110,7 @@ namespace CakesWebApp.Controllers
         {
             if (!this.Request.Cookies.ContainsCookie(".auth-cakes"))
             {
-                return new RedirectResult("/");
+                return this.Redirect("/");
             }
 
             var cookie = this.Request.Cookies.GetCookie(".auth-cakes");
