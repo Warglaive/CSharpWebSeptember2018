@@ -14,6 +14,7 @@ namespace SIS.HTTP.Extensions
                 case 200: return "200 OK";
                 case 201: return "201 Created";
                 case 302: return "302 Found";
+                case 301: return "301 Redirect";
                 case 303: return "303 See Other";
                 case 400: return "400 Bad Request";
                 case 401: return "401 Unauthorized";
@@ -24,10 +25,10 @@ namespace SIS.HTTP.Extensions
 
             throw new NotSupportedException(string.Format(NotSupportedStatusCodeExceptionMessage, code));
         }
-        
+
         public static string GetResponseLine(this HttpResponseStatusCode httpResponseStatus)
         {
-            return GetLineByCode((int) httpResponseStatus);
+            return GetLineByCode((int)httpResponseStatus);
         }
     }
 }
