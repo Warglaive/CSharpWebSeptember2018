@@ -51,10 +51,12 @@ namespace SIS.HTTP.Responses
         public override string ToString()
         {
             StringBuilder result = new StringBuilder();
-
+            ////HTTP 1.1 200 OK 
             result
-                .Append($"{GlobalConstants.HttpOneProtocolFragment} {this.StatusCode.GetResponseLine()}").Append(GlobalConstants.HttpNewLine)
-                .Append(this.Headers).Append(GlobalConstants.HttpNewLine);
+                .Append($"{GlobalConstants.HttpOneProtocolFragment} {(int)this.StatusCode} {this.StatusCode.ToString()}")
+                .Append(GlobalConstants.HttpNewLine)
+                .Append(this.Headers)
+                .Append(GlobalConstants.HttpNewLine);
 
             if (this.Cookies.HasCookies())
             {
