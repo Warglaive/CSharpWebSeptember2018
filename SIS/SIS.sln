@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.28010.2003
+VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIS.WebServer", "SIS.WebServer\SIS.WebServer.csproj", "{9069BFBB-817C-4FA4-A980-E20E9DD7A469}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{26743AB4-674F-4F9B-AFC6-9C1EBDA9BEE9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IRunesWebApp", "Apps\IRunesWebApp\IRunesWebApp.csproj", "{D8142120-FD74-4425-9BB1-822C1FFFEC61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIS.MvcFramework", "SIS.MvcFramework\SIS.MvcFramework.csproj", "{082392D4-484F-4A9C-89CD-1EC223B67DFA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{D8142120-FD74-4425-9BB1-822C1FFFEC61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8142120-FD74-4425-9BB1-822C1FFFEC61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8142120-FD74-4425-9BB1-822C1FFFEC61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{082392D4-484F-4A9C-89CD-1EC223B67DFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{082392D4-484F-4A9C-89CD-1EC223B67DFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{082392D4-484F-4A9C-89CD-1EC223B67DFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{082392D4-484F-4A9C-89CD-1EC223B67DFA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

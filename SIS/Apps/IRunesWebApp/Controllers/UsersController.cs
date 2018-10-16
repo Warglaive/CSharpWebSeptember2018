@@ -101,7 +101,5 @@ namespace IRunesWebApp.Controllers
             // Redirect
             return response;
         }
-
-
     }
 }
