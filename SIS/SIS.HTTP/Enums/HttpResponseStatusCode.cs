@@ -4,9 +4,10 @@
     {
         Ok = 200,
         Created = 201,
-        Redirect = 301,
+        PermanentRedirect = 301,
         Found = 302,
         SeeOther = 303,
+        TemporaryRedirect = 307,
         BadRequest = 400,
         Unauthorized = 401,
         Forbidden = 403,

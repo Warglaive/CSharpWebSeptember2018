@@ -1,6 +1,5 @@
 ﻿using System;
 using SIS.HTTP.Responses;
-using SIS.WebServer.Results;
 using System.Linq;
 using CakesWebApp.Models;
 using SIS.HTTP.Cookies;

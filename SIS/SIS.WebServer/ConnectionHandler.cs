@@ -81,27 +81,6 @@ namespace SIS.WebServer
             return this.serverRoutingTable.Routes[httpRequest.RequestMethod][httpRequest.Path].Invoke(httpRequest);
         }
 
-        public IHttpResponse ReturnIfResource(string resourceName)
-        {
-            //1.take needed folder(users/home or album)
-            //take filePath(css or other)
-            //set directory to CSS or JS folders
-            var filePath = ResourceFolderName + DirDelimiter + JsFolderName + resourceName;
-            var neededFolder = resourceName.Substring(resourceName.Length - 3);
-            if (neededFolder == "css")
-            {
-                filePath = ResourceFolderName + DirDelimiter + CssFolderName + resourceName;
-            }
-            if (File.Exists(filePath))
-            {
-                var file = File.ReadAllText(filePath);
-                var arr = Encoding.UTF8.GetBytes(file);
-                return new InlineResouceResponse(arr, HttpResponseStatusCode.Ok);
-            }
-
-            return new HttpResponse(HttpResponseStatusCode.NotFound);
-        }
-
         private IHttpResponse HandleRequestResponse(string httpRequestPath)
         {
             var indexOfStartOfExtension = httpRequestPath.LastIndexOf('.');
@@ -126,18 +105,6 @@ namespace SIS.WebServer
             var fileContent = File.ReadAllBytes(resourcePath);
 
             return new InlineResouceResponse(fileContent, HttpResponseStatusCode.Ok);
-        }
-
-        private bool IsResourceRequest(IHttpRequest httpRequest)
-        {
-            var requestPath = httpRequest.Path;
-            if (requestPath.Contains('.'))
-            {
-                var requestPathExtension = requestPath
-                    .Substring(requestPath.LastIndexOf('.'));
-                return GlobalConstants.ResourceExtensions.Contains(requestPathExtension);
-            }
-            return false;
         }
 
         private async Task PrepareResponse(IHttpResponse httpResponse)
