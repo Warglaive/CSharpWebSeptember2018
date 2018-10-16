@@ -12,10 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\SIS.MvcFramework\SIS.MvcFramework.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Resources\css\.DS_Store">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

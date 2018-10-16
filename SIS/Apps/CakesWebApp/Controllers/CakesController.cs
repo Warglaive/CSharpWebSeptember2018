@@ -42,7 +42,7 @@ namespace CakesWebApp.Controllers
             }
 
             // Redirect
-            return new RedirectResult("/");
+            return this.Redirect("/");
         }
 
         public IHttpResponse ById()
