@@ -18,7 +18,7 @@ namespace IRunesWebApp.Data
             DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
-                .UseSqlServer("Server=.; Database=IRunesApp; Integrated Security=true")
+                .UseSqlServer("Server=WARGLAIVE\\SQLEXPRESS; Database=IRunesAppDB; Integrated Security=true")
                 .UseLazyLoadingProxies();
 
             base.OnConfiguring(optionsBuilder);

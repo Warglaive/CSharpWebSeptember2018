@@ -6,16 +6,16 @@ using SIS.WebServer.Routing;
 
 namespace IRunesWebApp
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main()
         {
             ServerRoutingTable serverRoutingTable = new ServerRoutingTable();
 
             ConfigureRouting(serverRoutingTable);
 
 
-            Server server = new Server(80, serverRoutingTable);
+            Server server = new Server(8000, serverRoutingTable);
 
             server.Run();
         }

@@ -61,13 +61,13 @@ namespace IRunesWebApp.Controllers
 
         protected IHttpResponse View([CallerMemberName] string viewName = "")
         {
-            var layoutView = RootDirectoryRelativePath +
+            var layoutView = //RootDirectoryRelativePath +
                 ViewsFolderName +
                 DirectorySeparator +
                 LayoutViewFileName + 
                 HtmlFileExtension;
 
-            string filePath = RootDirectoryRelativePath +
+            string filePath = //RootDirectoryRelativePath +
                 ViewsFolderName +
                 DirectorySeparator +
                 this.GetCurrentControllerName() +
