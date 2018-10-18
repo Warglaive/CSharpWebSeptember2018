@@ -2,11 +2,12 @@
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using SIS.HTTP.Cookies;
 using SIS.HTTP.Enums;
+using SIS.WebServer.Api;
+
 namespace SIS.WebServer
 {
     using HTTP.Common;
