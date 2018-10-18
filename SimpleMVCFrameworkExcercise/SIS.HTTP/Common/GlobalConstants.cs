@@ -8,6 +8,10 @@
 
         public const string HttpNewLine = "\r\n";
 
-        public static string[] ResourceExtensions = {".js", ".css"};
+        public static readonly string[] ResourceExtensions = { ".js", ".css" };
+
+        public const string DirectorySeparator = "/";
+
+        public const string HtmlFileExtension = ".html";
     }
 }

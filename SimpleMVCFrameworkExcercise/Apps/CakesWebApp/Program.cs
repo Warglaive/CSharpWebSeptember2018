@@ -1,13 +1,14 @@
-﻿using CakesWebApp.Controllers;
+﻿using System;
+using CakesWebApp.Controllers;
 using SIS.HTTP.Enums;
 using SIS.WebServer;
 using SIS.WebServer.Routing;
 
 namespace CakesWebApp
 {
-    public class Program
+    class Program
     {
-        public static void Main()
+        static void Main(string[] args)
         {
             ServerRoutingTable serverRoutingTable = new ServerRoutingTable();
 
@@ -33,7 +34,9 @@ namespace CakesWebApp
             // cakes/view?id=1
             serverRoutingTable.Routes[HttpRequestMethod.Get]["/cakes/view"] = request =>
                 new CakesController().ById(request);
-            Server server = new Server(8000, serverRoutingTable);
+
+            Server server = new Server(80, serverRoutingTable);
+
             server.Run();
         }
     }

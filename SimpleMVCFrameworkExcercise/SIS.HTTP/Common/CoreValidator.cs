@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class CoreValidator
+    public static class CoreValidator
     {
         public static void ThrowIfNull(object obj, string name)
         {
