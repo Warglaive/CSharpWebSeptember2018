@@ -1,6 +1,4 @@
-﻿using SIS.Framework.Controllers;
-
-namespace SIS.Framework.Utilities
+﻿namespace SIS.Framework.Utilities
 {
     public static class ControllerUtilities
     {

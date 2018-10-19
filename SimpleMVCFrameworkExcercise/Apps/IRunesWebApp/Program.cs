@@ -12,7 +12,7 @@ namespace IRunesWebApp
 {
     public class Program
     {
-       public static void Main()
+        public static void Main()
         {
             var dependencyMap = new Dictionary<Type, Type>();            
             var dependencyContainer = new DependencyContainer(dependencyMap);

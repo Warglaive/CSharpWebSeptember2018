@@ -1,5 +1,4 @@
 ﻿using System.Runtime.CompilerServices;
-using System.Security.Principal;
 using SIS.Framework.ActionsResults;
 using SIS.Framework.ActionsResults.Contracts;
 using SIS.Framework.Models;

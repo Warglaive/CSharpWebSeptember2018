@@ -6,12 +6,7 @@ namespace SIS.Framework.Attributes.Methods
     {
         public override bool IsValid(string requestMethod)
         {
-            if (requestMethod.ToLower() == "get")
-            {
-                return true;
-            }
-
-            return false;
+            return requestMethod.ToLower() == "get";
         }
     }
 }

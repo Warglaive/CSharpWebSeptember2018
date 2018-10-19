@@ -1,24 +1,27 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
-using SIS.HTTP.Common;
 using SIS.HTTP.Cookies;
 using SIS.HTTP.Enums;
-using SIS.HTTP.Exceptions;
-using SIS.HTTP.Requests;
-using SIS.HTTP.Responses;
-using SIS.HTTP.Sessions;
 using SIS.WebServer.Api.Contracts;
-using SIS.WebServer.Results;
 
 namespace SIS.WebServer
 {
+    using HTTP.Common;
+    using HTTP.Exceptions;
+    using HTTP.Requests;
+    using HTTP.Responses;
+    using HTTP.Sessions;
+    using Results;
+    using Routing;
+
     public class ConnectionHandler
     {
         private readonly Socket client;
 
-        // private const string RootDirectoryRelativePath = "../../..";
+        private const string RootDirectoryRelativePath = "../../..";
 
         private readonly IHttpHandlingContext handlersContext;
 
