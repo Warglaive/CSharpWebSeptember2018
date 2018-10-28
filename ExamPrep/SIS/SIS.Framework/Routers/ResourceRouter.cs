@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using SIS.Framework.Routers.Contracts;
 using SIS.HTTP.Enums;
@@ -10,11 +11,11 @@ namespace SIS.Framework.Routers
 {
     public class ResourceRouter : IResourceRouter
     {
-        private const string RootDirectoryRelativePath = "../../../";
+        // private const string RootDirectoryRelativePath = "../../../";
 
         private const string ResourceFolderPath = "Resources/";
 
-        private static readonly string[] AllowedResourceExtensions = {".js", ".css", ".ico", ".jpg", ".jpeg", ".png", ".gif", ".html"};
+        private static readonly string[] AllowedResourceExtensions = { ".js", ".css", ".ico", ".jpg", ".jpeg", ".png", ".gif", ".html" };
 
         private string FormatResourcePath(string httpRequestPath)
         {
@@ -28,8 +29,8 @@ namespace SIS.Framework.Routers
                 .Substring(
                     indexOfStartOfNameOfResource);
 
-            return RootDirectoryRelativePath
-                               + ResourceFolderPath
+            return //RootDirectoryRelativePath +
+                                ResourceFolderPath
                                + requestPathExtension.Substring(1)
                                + resourceName;
         }
@@ -51,6 +52,9 @@ namespace SIS.Framework.Routers
                 string httpRequestPath = httpRequest.Path;
 
                 string resourcePath = this.FormatResourcePath(httpRequestPath);
+
+                //
+                Console.WriteLine($"Resources Loaded From: " + Path.GetFullPath(resourcePath));
 
                 if (!File.Exists(resourcePath))
                 {

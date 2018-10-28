@@ -9,13 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIS.HTTP", "SIS.HTTP\SIS.HT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIS.Framework", "SIS.Framework\SIS.Framework.csproj", "{035FAB55-6E4D-4C26-AB35-DBB6332CBE58}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIS.Demo", "SIS.Demo\SIS.Demo.csproj", "{4C6C0396-E6E3-44EE-9045-819645574AC6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Torshia.Web", "Torshia\Torshia.Web.csproj", "{C496FE24-A120-4AB8-9B7E-7FC99254D049}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Torshia.Web", "Torshia\Torshia.Web.csproj", "{C496FE24-A120-4AB8-9B7E-7FC99254D049}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Torshia.Data", "Torshia.Data\Torshia.Data.csproj", "{F8A762E8-8C8F-47C3-85BC-81FF7FFBAC1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Torshia.Data", "Torshia.Data\Torshia.Data.csproj", "{F8A762E8-8C8F-47C3-85BC-81FF7FFBAC1C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Torshia.Models", "Torshia.Models\Torshia.Models.csproj", "{56C001B0-98A3-48C7-937F-3A5DF6F301CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Torshia.Models", "Torshia.Models\Torshia.Models.csproj", "{56C001B0-98A3-48C7-937F-3A5DF6F301CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +33,6 @@ Global
 		{035FAB55-6E4D-4C26-AB35-DBB6332CBE58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{035FAB55-6E4D-4C26-AB35-DBB6332CBE58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{035FAB55-6E4D-4C26-AB35-DBB6332CBE58}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4C6C0396-E6E3-44EE-9045-819645574AC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4C6C0396-E6E3-44EE-9045-819645574AC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4C6C0396-E6E3-44EE-9045-819645574AC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4C6C0396-E6E3-44EE-9045-819645574AC6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C496FE24-A120-4AB8-9B7E-7FC99254D049}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C496FE24-A120-4AB8-9B7E-7FC99254D049}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C496FE24-A120-4AB8-9B7E-7FC99254D049}.Release|Any CPU.ActiveCfg = Release|Any CPU
