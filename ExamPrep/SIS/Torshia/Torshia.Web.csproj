@@ -14,4 +14,8 @@
     <ProjectReference Include="..\Torshia.Data\Torshia.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\" />
+  </ItemGroup>
+
 </Project>

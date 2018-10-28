@@ -22,6 +22,6 @@ namespace Torshia.Models
 
         public string Participants { get; set; }
 
-        public IEnumerable<AffectedSectors> AffectedSectors { get; set; }
+        public ICollection<AffectedSectors> AffectedSectors { get; set; }
     }
 }

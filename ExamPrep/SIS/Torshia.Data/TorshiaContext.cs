@@ -16,7 +16,7 @@ namespace Torshia.Data
         {
         }
 
-        protected TorshiaContext()
+        public TorshiaContext()
         {
         }
 
@@ -24,7 +24,7 @@ namespace Torshia.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=WARGLAIVE\\SQLEXPRESS;Database=Torshia;Integrated_Security=true");
+                optionsBuilder.UseSqlServer("Server=WARGLAIVE\\SQLEXPRESS;Database=Torshia;Integrated Security=true");
             }
         }
         public class BloggingContextFactory : IDesignTimeDbContextFactory<TorshiaContext>
@@ -36,13 +36,6 @@ namespace Torshia.Data
 
                 return new TorshiaContext(optionsBuilder.Options);
             }
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            //modelBuilder.Entity<Task>().HasMany(x => x.AffectedSectors)
-            //    .WithOne(x => x.Task)
-            //    .HasForeignKey(x => x.TaskId);
         }
     }
 }

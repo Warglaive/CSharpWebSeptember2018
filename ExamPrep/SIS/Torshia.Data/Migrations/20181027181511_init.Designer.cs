@@ -10,7 +10,7 @@ using Torshia.Data;
 namespace Torshia.Data.Migrations
 {
     [DbContext(typeof(TorshiaContext))]
-    [Migration("20181027174530_init")]
+    [Migration("20181027181511_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
