@@ -8,7 +8,7 @@ namespace SIS.Framework.Views
 {
     public class ViewEngine
     {
-        private const string ViewPathPrefix = @"..\..\..";
+       // private const string ViewPathPrefix = @"..\..\..";
 
         private const string DisplayTemplateSuffix = "DisplayTemplate";
 
@@ -20,7 +20,7 @@ namespace SIS.Framework.Views
 
         private const string ModelCollectionViewParameterPattern = @"\@Model\.Collection\.(\w+)\((.+)\)";
 
-        private string ViewsFolderPath => $@"{ViewPathPrefix}\{MvcContext.Get.ViewsFolder}\";
+        private string ViewsFolderPath => $@"{MvcContext.Get.ViewsFolder}\";
 
         private string ViewsSharedFolderPath => $@"{this.ViewsFolderPath}Shared\";
 
