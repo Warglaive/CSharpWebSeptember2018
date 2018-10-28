@@ -1,6 +1,7 @@
 ﻿using SIS.Framework.Api;
 using SIS.Framework.Services;
-using Torshia.Web.Controllers;
+using Torshia.Web.Services;
+using Torshia.Web.Services.Contracts;
 
 namespace Torshia.Web
 {
@@ -8,7 +9,7 @@ namespace Torshia.Web
     {
         public override void ConfigureServices(IDependencyContainer dependencyContainer)
         {
-            dependencyContainer.RegisterDependency<HomeController, HomeController>();
+            dependencyContainer.RegisterDependency<IUsersService, UsersService>();
         }
     }
 }
