@@ -2,7 +2,6 @@
 using SIS.Framework.ActionResults;
 using SIS.Framework.Attributes.Method;
 using SIS.Framework.Security;
-using Torshia.Models;
 using Torshia.Web.Controllers.Base;
 using Torshia.Web.Services.Contracts;
 using Torshia.Web.ViewModels;
@@ -24,7 +23,15 @@ namespace Torshia.Web.Controllers
         [HttpPost]
         public IActionResult Login(LoginViewModel model)
         {
-            throw new NotImplementedException();
+            if (!usersService.UserExistsByUsernameAndPassword(model.Username, model.Password))
+            {
+                return this.RedirectToAction("/users/register");
+            }
+            this.SignIn(new IdentityUser
+            {
+                Username = model.Username
+            });
+            return this.RedirectToAction("/");
         }
 
         public IActionResult Register() => this.View();
@@ -41,6 +48,12 @@ namespace Torshia.Web.Controllers
             });
 
             return RedirectToAction("/");
+        }
+
+        public IActionResult Logout()
+        {
+            this.SignOut();
+            return this.RedirectToAction("/");
         }
     }
 }

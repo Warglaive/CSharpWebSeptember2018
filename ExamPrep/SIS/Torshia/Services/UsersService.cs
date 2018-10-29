@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Internal;
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore.Internal;
 using Torshia.Data;
 using Torshia.Models;
 using Torshia.Models.Enums;
@@ -17,7 +18,7 @@ namespace Torshia.Web.Services
 
         public void RegisterUser(string username, string password, string email)
         {
-            var role = this.context.Users.Any() ? Roles.User : Roles.Admin;
+            var role = EnumerableExtensions.Any(this.context.Users) ? Roles.User : Roles.Admin;
 
             var user = new User
             {
@@ -29,5 +30,8 @@ namespace Torshia.Web.Services
             this.context.Users.Add(user);
             this.context.SaveChanges();
         }
+
+        public bool UserExistsByUsernameAndPassword(string username, string password) =>
+            this.context.Users.Any(x => x.Username == username && x.Password == password);
     }
 }
