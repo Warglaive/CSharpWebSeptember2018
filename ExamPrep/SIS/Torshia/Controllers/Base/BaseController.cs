@@ -8,10 +8,15 @@ namespace Torshia.Web.Controllers.Base
     {
         protected override IViewable View([CallerMemberName]string actionName = "")
         {
-            if (this.Identity != null)
+            if (this.Identity != null) //if logged in
+            {
+                this.Model.Data["LoggedIn"] = "block"; //block = show 
+                this.Model.Data["Username"] = this.Identity.Username;
+                this.Model.Data["NotLoggedIn"] = "none"; //none = dont show
+            }
+            else
             {
                 this.Model.Data["LoggedIn"] = "none";
-                //addd username:2:11:40
                 this.Model.Data["NotLoggedIn"] = "block";
             }
 

@@ -17,7 +17,6 @@ namespace Torshia.Web.Controllers
             this.usersService = usersService;
         }
 
-
         public IActionResult Login() => this.View();
 
         [HttpPost]
