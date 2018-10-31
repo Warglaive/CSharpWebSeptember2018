@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using SIS.Framework.ActionResults;
 using Torshia.Web.Controllers.Base;
 using Torshia.Web.Services.Contracts;
@@ -8,11 +9,11 @@ namespace Torshia.Web.Controllers
 {
     public class HomeController : BaseController
     {
-        private IReportsService reportsService;
+        private ITasksService tasksService;
 
-        public HomeController(IReportsService reportsService)
+        public HomeController(ITasksService tasksService)
         {
-            this.reportsService = reportsService;
+            this.tasksService = tasksService;
         }
 
         public IActionResult Index()
@@ -22,18 +23,25 @@ namespace Torshia.Web.Controllers
             {
                 return this.View();
             }
-            
-            var reports = reportsService.All();
-            var reportViewModels = new List<ReportViewModel>();
-            foreach (var report in reports)
+
+            var tasks = tasksService.All().ToList();
+
+            var wrapperViewModels = new List<TaskViewModelWrapper>();
+
+            wrapperViewModels.Add(new TaskViewModelWrapper());
+
+            for (var i = 0; i < tasks.Count; i++)
             {
-                reportViewModels.Add(new ReportViewModel
+                var lastAddedWrapper = wrapperViewModels.Last();
+                lastAddedWrapper.TaskViewModels.Add(new TaskViewModel
                 {
-                    //Title = report.Task.Title,
-                    //Level = report.Task.AffectedSectors.Count
+                    Title = tasks[i].Title,
+                    Level = tasks[i].AffectedSectors.Count
                 });
+
             }
-            //this.Model.Data["ReportViewModels"] = reportViewModels;
+
+            this.Model.Data["TaskViewModels"] = wrapperViewModels;
             return this.View();
         }
     }

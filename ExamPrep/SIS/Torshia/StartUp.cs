@@ -10,7 +10,7 @@ namespace Torshia.Web
         public override void ConfigureServices(IDependencyContainer dependencyContainer)
         {
             dependencyContainer.RegisterDependency<IUsersService, UsersService>();
-            dependencyContainer.RegisterDependency<IReportsService, ReportsService>();
+            dependencyContainer.RegisterDependency<ITasksService, TasksService>();
         }
     }
 }

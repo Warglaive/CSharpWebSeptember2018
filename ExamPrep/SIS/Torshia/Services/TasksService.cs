@@ -5,18 +5,18 @@ using Torshia.Web.Services.Contracts;
 
 namespace Torshia.Web.Services
 {
-    public class ReportsService : IReportsService
+    public class TasksService : ITasksService
     {
         private readonly TorshiaContext context;
 
-        public ReportsService(TorshiaContext context)
+        public TasksService(TorshiaContext context)
         {
             this.context = context;
         }
 
-        public IQueryable<Report> All()
+        public IQueryable<Task> All()
         {
-            return this.context.Reports;
+            return this.context.Tasks;
         }
     }
 }

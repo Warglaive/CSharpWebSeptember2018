@@ -3,8 +3,8 @@ using Torshia.Models;
 
 namespace Torshia.Web.Services.Contracts
 {
-    public interface IReportsService
+    public interface ITasksService
     {
-        IQueryable<Report> All();
+        IQueryable<Task> All();
     }
 }
