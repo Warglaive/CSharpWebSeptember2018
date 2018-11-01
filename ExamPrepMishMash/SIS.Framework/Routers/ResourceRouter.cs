@@ -10,11 +10,11 @@ namespace SIS.Framework.Routers
 {
     public class ResourceRouter : IResourceRouter
     {
-        private const string RootDirectoryRelativePath = "../../../";
+        // private const string RootDirectoryRelativePath = "../../../";
 
         private const string ResourceFolderPath = "Resources/";
 
-        private static readonly string[] AllowedResourceExtensions = {".js", ".css", ".ico", ".jpg", ".jpeg", ".png", ".gif", ".html"};
+        private static readonly string[] AllowedResourceExtensions = { ".js", ".css", ".ico", ".jpg", ".jpeg", ".png", ".gif", ".html" };
 
         private string FormatResourcePath(string httpRequestPath)
         {
@@ -25,8 +25,8 @@ namespace SIS.Framework.Routers
                 .Substring(
                     indexOfStartOfNameOfResource);
 
-            return RootDirectoryRelativePath
-                   + ResourceFolderPath
+            return //RootDirectoryRelativePath+
+                    ResourceFolderPath
                    + resourceName;
         }
 

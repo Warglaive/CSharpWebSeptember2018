@@ -17,4 +17,10 @@
     <ProjectReference Include="..\TORSHIA.Services\TORSHIA.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Views\Home\Index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
