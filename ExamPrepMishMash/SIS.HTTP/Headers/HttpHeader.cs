@@ -16,8 +16,6 @@
 
         public const string Host = "Host";
 
-        public const string Server = "Server";
-
         public const string Location = "Location";
 
         public HttpHeader(string key, string value)

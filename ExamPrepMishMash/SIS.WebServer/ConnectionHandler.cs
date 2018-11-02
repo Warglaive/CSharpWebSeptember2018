@@ -2,33 +2,34 @@
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
-using SIS.HTTP.Common;
 using SIS.HTTP.Cookies;
-using SIS.HTTP.Exceptions;
-using SIS.HTTP.Headers;
-using SIS.HTTP.Requests;
-using SIS.HTTP.Responses;
-using SIS.HTTP.Sessions;
-using SIS.WebServer.Api;
+using SIS.HTTP.Enums;
 using SIS.WebServer.Results;
 
 namespace SIS.WebServer
 {
+    using HTTP.Common;
+    using HTTP.Exceptions;
+    using HTTP.Requests;
+    using HTTP.Responses;
+    using HTTP.Sessions;
+    using Routing;
+
     public class ConnectionHandler
     {
         private readonly Socket client;
 
-        private readonly IHttpRequestHandler httpRequestHandler;
+        private readonly ServerRoutingTable serverRoutingTable;
 
         public ConnectionHandler(
             Socket client,
-            IHttpRequestHandler httpRequestHandler)
+            ServerRoutingTable serverRoutingTable)
         {
             CoreValidator.ThrowIfNull(client, nameof(client));
-            CoreValidator.ThrowIfNull(httpRequestHandler, nameof(httpRequestHandler));
+            CoreValidator.ThrowIfNull(serverRoutingTable, nameof(serverRoutingTable));
 
             this.client = client;
-            this.httpRequestHandler = httpRequestHandler;
+            this.serverRoutingTable = serverRoutingTable;
         }
 
         private async Task<IHttpRequest> ReadRequest()
@@ -61,11 +62,19 @@ namespace SIS.WebServer
 
             return new HttpRequest(result.ToString());
         }
-        
+
+        private IHttpResponse HandleRequest(IHttpRequest httpRequest)
+        {
+            if (!this.serverRoutingTable.Contains(httpRequest.RequestMethod, httpRequest.Path))
+            {
+                return new TextResult($"Route with method {httpRequest.RequestMethod} and path \"{httpRequest.Path}\" not found.", HttpResponseStatusCode.NotFound);
+            }
+
+            return this.serverRoutingTable.Get(httpRequest.RequestMethod, httpRequest.Path).Invoke(httpRequest);
+        }
+
         private async Task PrepareResponse(IHttpResponse httpResponse)
         {
-            httpResponse.AddHeader(new HttpHeader(HttpHeader.Server, "SIS/0.0.1"));
-
             byte[] byteSegments = httpResponse.GetBytes();
 
             await this.client.SendAsync(byteSegments, SocketFlags.None);
@@ -108,9 +117,11 @@ namespace SIS.WebServer
 
                 if (httpRequest != null)
                 {
+                    Console.WriteLine($"Processing: {httpRequest.RequestMethod} {httpRequest.Path}...");
+
                     string sessionId = this.SetRequestSession(httpRequest);
 
-                    var httpResponse = this.httpRequestHandler.Handle(httpRequest);
+                    var httpResponse = this.HandleRequest(httpRequest);
 
                     this.SetResponseSession(httpResponse, sessionId);
 
@@ -119,11 +130,11 @@ namespace SIS.WebServer
             }
             catch (BadRequestException e)
             {
-                await this.PrepareResponse(new BadRequestResult(e.Message));
+                await this.PrepareResponse(new TextResult(e.ToString(), HttpResponseStatusCode.BadRequest));
             }
             catch (Exception e)
             {
-                await this.PrepareResponse(new InternalServerErrorResult(e.StackTrace));
+                await this.PrepareResponse(new TextResult(e.ToString(), HttpResponseStatusCode.InternalServerError));
             }
 
             this.client.Shutdown(SocketShutdown.Both);
