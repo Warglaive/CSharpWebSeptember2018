@@ -17,7 +17,7 @@ namespace MishMash.App.Data
         {
         }
 
-        protected MishMashDbContext()
+        public MishMashDbContext()
         {
         }
 
