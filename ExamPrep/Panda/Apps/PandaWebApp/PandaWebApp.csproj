@@ -28,7 +28,7 @@
     <None Update="Views\Error.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Views\Home\Index.html">
+    <None Update="Views\Home\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Views\Packages\details-package.html">

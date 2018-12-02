@@ -1,25 +1,23 @@
 ﻿using PandaWebApp.Models;
-using PandaWebApp.ViewModels;
+using SIS.HTTP.Cookies;
 using SIS.HTTP.Responses;
 using SIS.MvcFramework;
+using System.Linq;
+using PandaWebApp.ViewModels;
 
-namespace PandaWebApp.Controllers.Users
+namespace PandaWebApp.Controllers
 {
     public class UsersController : BaseController
     {
-        [HttpGet("/users/register")]
+        [HttpGet("Users/Register")]
         public IHttpResponse Register()
         {
-            return this.View();
+            return this.View("Users/Register");
         }
 
-        [HttpPost("/users/register")]
+        [HttpPost]
         public IHttpResponse Register(UserViewModel model)
         {
-            if (model.Password != model.ConfirmPassword)
-            {
-                return BadRequestError("Passwords must match!");
-            }
             var user = new User
             {
                 Username = model.Username,
@@ -28,19 +26,52 @@ namespace PandaWebApp.Controllers.Users
             };
             this.ApplicationDbContext.Users.Add(user);
             this.ApplicationDbContext.SaveChanges();
-            return this.Redirect("home/index");
-        }
 
-        [HttpGet("/users/login")]
-        public IHttpResponse Login()
-        {
             return this.View();
         }
 
-        [HttpPost("/users/login")]
+        [HttpGet("Users/Login")]
+        public IHttpResponse Login()
+        {
+            return this.View("Users/Login");
+        }
+
+        [HttpPost]
         public IHttpResponse Login(UserViewModel model)
         {
-            return this.View(model);
+            var user = this.ApplicationDbContext.Users.FirstOrDefault(x =>
+                  x.Username == model.Username.Trim() &&
+                  x.Password == model.Password);
+
+            if (user == null)
+            {
+                return this.BadRequestErrorWithView("Invalid username or password.");
+            }
+
+            var mvcUser = new MvcUserInfo
+            {
+                Username = user.Username,
+                Role = user.Role.ToString(),
+            };
+            var cookieContent = this.UserCookieService.GetUserCookie(mvcUser);
+
+            var cookie = new HttpCookie(".auth-cakes", cookieContent, 7) { HttpOnly = true };
+            this.Response.Cookies.Add(cookie);
+            return this.Redirect("/");
+        }
+
+        [Authorize]
+        public IHttpResponse Logout()
+        {
+            if (!this.Request.Cookies.ContainsCookie(".auth-cakes"))
+            {
+                return this.Redirect("/");
+            }
+
+            var cookie = this.Request.Cookies.GetCookie(".auth-cakes");
+            cookie.Delete();
+            this.Response.Cookies.Add(cookie);
+            return this.Redirect("/");
         }
     }
 }

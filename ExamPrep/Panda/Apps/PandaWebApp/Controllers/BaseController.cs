@@ -11,6 +11,6 @@ namespace PandaWebApp.Controllers
             this.ApplicationDbContext = new PandaDbContext();
         }
 
-        protected PandaDbContext ApplicationDbContext;
+        protected PandaDbContext ApplicationDbContext { get; set; }
     }
 }
