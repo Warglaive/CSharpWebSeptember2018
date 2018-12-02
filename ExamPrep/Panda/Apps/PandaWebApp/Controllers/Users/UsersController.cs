@@ -1,11 +1,12 @@
-﻿using PandaWebApp.Models;
+﻿using System.Linq;
+using PandaWebApp.Models;
+using PandaWebApp.Models.Enums;
+using PandaWebApp.ViewModels;
 using SIS.HTTP.Cookies;
 using SIS.HTTP.Responses;
 using SIS.MvcFramework;
-using System.Linq;
-using PandaWebApp.ViewModels;
 
-namespace PandaWebApp.Controllers
+namespace PandaWebApp.Controllers.Users
 {
     public class UsersController : BaseController
     {
@@ -24,10 +25,14 @@ namespace PandaWebApp.Controllers
                 Password = model.Password,
                 Email = model.Email
             };
+            if (!this.ApplicationDbContext.Users.Any())
+            {
+                user.Role = Role.Admin;
+            }
             this.ApplicationDbContext.Users.Add(user);
             this.ApplicationDbContext.SaveChanges();
 
-            return this.View();
+            return Redirect("/users/login");
         }
 
         [HttpGet("Users/Login")]
