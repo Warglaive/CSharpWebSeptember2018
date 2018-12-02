@@ -6,9 +6,16 @@ namespace PandaWebApp.Controllers.Packages
 {
     public class PackagesController : BaseController
     {
+        [HttpGet("/packages/create")]
         public IHttpResponse Create()
         {
-            return this.View();
+            var users = ApplicationDbContext.Users;
+            var model = new UserViewModel();
+            foreach (var user in users)
+            {
+                model.UsersAllNames.Add(user.Username);
+            }
+            return this.View(model);
         }
 
         [HttpPost]

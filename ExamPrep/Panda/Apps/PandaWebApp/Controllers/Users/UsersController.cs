@@ -19,6 +19,20 @@ namespace PandaWebApp.Controllers.Users
         [HttpPost]
         public IHttpResponse Register(UserViewModel model)
         {
+            if (string.IsNullOrEmpty(model.Username) || string.IsNullOrWhiteSpace(model.Username))
+            {
+                return this.BadRequestErrorWithView("Username can't be null!");
+            }
+
+            if (string.IsNullOrEmpty(model.Password) || string.IsNullOrWhiteSpace(model.Password))
+            {
+                return this.BadRequestErrorWithView("Password can't be null!");
+            }
+
+            if (string.IsNullOrEmpty(model.Email) || string.IsNullOrWhiteSpace(model.Email))
+            {
+                return this.BadRequestErrorWithView("Email can't be null!");
+            }
             var user = new User
             {
                 Username = model.Username,

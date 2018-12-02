@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PandaWebApp.Data;
 
 namespace PandaWebApp.Migrations
 {
     [DbContext(typeof(PandaDbContext))]
-    partial class PandaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181202213930_validationAdded")]
+    partial class validationAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

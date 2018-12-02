@@ -18,10 +18,12 @@
         <div class="form-group">
             <label for="recipient" class="text-center text-torshia">Recipient</label>
             <!--DROPDOWN-->
+            <!--DONT NAME IT user, causing erorr!--> 
             <select class="form-control">
-                <option>Default select</option>
-                <option>2</option>
-                <option>3</option>
+                @foreach (var username in Model.UsersAllNames)
+                {
+                <option>@username</option>
+                }
             </select>
             <!--DROPDOWN-->
         </div>
