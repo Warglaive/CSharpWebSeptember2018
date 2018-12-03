@@ -8,26 +8,27 @@
         </div>
         <div class="form-group">
             <label for="weight" class="text-torshia">Weight</label>
-            <input type="weight" class="form-control" id="password" placeholder="Weight..." name="weight">
+            <input type="text" class="form-control" id="password" placeholder="Weight..." name="weight">
         </div>
         <div class="form-group">
             <label for="shippingAddress" class="text-torshia">Shipping Address</label>
-            <input type="shippingAddress" class="form-control" id="shippingAddress" placeholder="Shipping Address..." name="shippingAddress">
+            <input type="text" class="form-control" id="shippingAddress" placeholder="Shipping Address..." name="shippingAddress">
         </div>
-        <hr class="bg-panda w-50 hr-2" />
+        <hr class="bg-panda w-100 hr-2" />
         <div class="form-group">
             <label for="recipient" class="text-center text-torshia">Recipient</label>
             <!--DROPDOWN-->
-            <!--DONT NAME IT user, causing erorr!--> 
-            <select class="form-control">
+            <!--DONT NAME IT user, causing erorr!-->
+            <select class="form-control" name="Recipient">
+                <option selected="selected" disabled="disabled">-- Choose Recipient --</option>
                 @foreach (var username in Model.UsersAllNames)
                 {
-                <option>@username</option>
+                <option type="s">@username</option>
                 }
             </select>
             <!--DROPDOWN-->
         </div>
-        <hr class="bg-panda w-50 hr-2" />
+        <hr class="bg-panda w-100 hr-2" />
         <div class="button-holder mt-4 d-flex justify-content-center">
             <button type="submit" class="btn bg-panda text-white">Create</button>
         </div>

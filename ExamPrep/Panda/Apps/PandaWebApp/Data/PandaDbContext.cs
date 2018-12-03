@@ -30,11 +30,12 @@ namespace PandaWebApp.Data
             //One package => one receips, one receipt => one package
             //one user => many packages
             //one package => one user
-            modelBuilder.Entity<Package>()
-                .HasOne(x => x.Receipt)
-                .WithOne(x => x.Package)
-                .HasForeignKey<Package>(x => x.ReceiptId)
-                .OnDelete(DeleteBehavior.Restrict);
+
+            //modelBuilder.Entity<Package>()
+            //    .HasOne(x => x.Receipt)
+            //    .WithOne(x => x.Package)
+            //    .HasForeignKey<Package>(x => x.ReceiptId)
+            //    .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<User>()
                 .HasMany(x => x.Packages)

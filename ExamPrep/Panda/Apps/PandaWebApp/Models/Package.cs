@@ -25,7 +25,7 @@ namespace PandaWebApp.Models
         public User Recipient { get; set; }
         public int RecipientId { get; set; }
 
-        public Receipt Receipt { get; set; }
-        public int ReceiptId { get; set; }
+        //public Receipt Receipt { get; set; }
+        //public int ReceiptId { get; set; }
     }
 }
