@@ -64,10 +64,17 @@ namespace PandaWebApp.Controllers.Packages
             return this.Redirect("/home/index");
         }
 
-        public IHttpResponse Details()
+        //[HttpGet("/packages/PackageById")]
+        public IHttpResponse Details(int id)
         {
-            //TODO: Implement
-            return this.View();
+            //take needed package by its Id => pass it to the view => fill the view with info.
+            var currentPackage = this.ApplicationDbContext.Packages.FirstOrDefault(x => x.Id == id);
+            if (currentPackage == null)
+            {
+                return BadRequestError("Product not found.");
+            }
+            var viewModel = currentPackage.To<PackageViewModel>();
+            return this.View(viewModel);
         }
     }
 }
