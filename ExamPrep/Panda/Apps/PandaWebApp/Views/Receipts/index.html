@@ -19,9 +19,9 @@
                     <th scope="row" class="col-lg-5 d-flex justify-content-center"><h5>@receipt.Id</h5></th>
                     <td class="col-lg-2 d-flex justify-content-center"><h5>$@receipt.Fee</h5></td>
                     <td class="col-lg-2 d-flex justify-content-center"><h5>@receipt.IssuedOn</h5></td>
-                    <td class="col-lg-2 d-flex justify-content-center"><h5>@receipt.Recipient</h5></td>
+                    <td class="col-lg-2 d-flex justify-content-center"><h5>@receipt.RecipientUsername</h5></td>
                     <td class="col-lg-1 d-flex justify-content-center">
-                        <a href="/receipts/details" class="btn bg-panda text-white">Details</a>
+                        <a href="/receipts/details?id=@receipt.Id" class="btn bg-panda text-white">Details</a>
                     </td>
                 </tr>
                 }

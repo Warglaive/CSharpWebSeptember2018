@@ -93,7 +93,7 @@ namespace PandaWebApp.Migrations
 
             modelBuilder.Entity("PandaWebApp.Models.Package", b =>
                 {
-                    b.HasOne("PandaWebApp.Models.User", "Recipient")
+                    b.HasOne("PandaWebApp.Models.User", "RecipientUsername")
                         .WithMany("Packages")
                         .HasForeignKey("RecipientId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -106,7 +106,7 @@ namespace PandaWebApp.Migrations
                         .HasForeignKey("PackageId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("PandaWebApp.Models.User", "Recipient")
+                    b.HasOne("PandaWebApp.Models.User", "RecipientUsername")
                         .WithMany()
                         .HasForeignKey("RecipientId")
                         .OnDelete(DeleteBehavior.Cascade);

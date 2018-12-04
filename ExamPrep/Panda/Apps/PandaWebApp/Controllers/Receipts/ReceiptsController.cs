@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using PandaWebApp.ViewModels;
@@ -20,11 +19,32 @@ namespace PandaWebApp.Controllers.Receipts
                     Id = receipt.Id,
                     Fee = receipt.Fee,
                     IssuedOn = receipt.IssuedOn.ToString(CultureInfo.InvariantCulture),
-                    Recipient = receipt.Recipient.Username
+                    RecipientUsername = receipt.Recipient.Username
                 };
                 allReceipts.ReceiptViewModels.Add(currentReceipt);
             }
             return this.View(allReceipts);
+        }
+
+        public IHttpResponse Details(int id)
+        {
+            var currentReceipt = this.ApplicationDbContext.
+                Receipts
+                .Include(x => x.Recipient)
+                .ThenInclude(x => x.Packages)
+                .FirstOrDefault(x => x.Id == id);
+
+            var viewModel = new ReceiptViewModel
+            {
+                Id = currentReceipt.Id,
+                IssuedOn = currentReceipt.IssuedOn.ToString(CultureInfo.InvariantCulture),
+                PackageWeight = currentReceipt.Package.Weight,
+                PackageDescription = currentReceipt.Package.Description,
+                RecipientUsername = currentReceipt.Recipient.Username,
+                DeliveryAddress = currentReceipt.Package.ShippingAddress,
+                Fee = currentReceipt.Fee
+            };
+            return this.View(viewModel);
         }
     }
 }
