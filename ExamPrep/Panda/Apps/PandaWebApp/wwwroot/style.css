@@ -23,10 +23,10 @@ a {
     text-underline: none;
 }
 
-a:hover {
-    outline: none;
-    text-decoration: none;
-}
+    a:hover {
+        outline: none;
+        text-decoration: none;
+    }
 
 tr {
     margin-right: 0 !important;
@@ -42,4 +42,19 @@ footer {
     bottom: 0;
     border: 0;
     width: 98%;
+}
+
+/*CUSTOM CSS*/
+.customPackage {
+    display: inline-block; /* or inline-flex */
+    justify-content: center;
+    border: solid #000000;
+    -ms-border-radius: 15px;
+    border-radius: 15px;
+    margin: 15px;
+    padding: 10px;
+}
+
+.cButon {
+    float: right;
 }

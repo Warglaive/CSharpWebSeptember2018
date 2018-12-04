@@ -34,7 +34,7 @@
     <None Update="Views\Packages\Create.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Views\Packages\details-package.html">
+    <None Update="Views\Packages\Details.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Views\Receipts\details-receipt.html">

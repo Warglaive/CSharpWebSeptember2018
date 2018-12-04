@@ -19,6 +19,10 @@ namespace PandaWebApp.Controllers.Users
         [HttpPost]
         public IHttpResponse Register(UserViewModel model)
         {
+            if (this.ApplicationDbContext.Users.Any(x => x.Username == model.Username))
+            {
+                return this.BadRequestError($"Username: {model.Username} already exist!");
+            }
             if (string.IsNullOrEmpty(model.Username) || string.IsNullOrWhiteSpace(model.Username))
             {
                 return this.BadRequestErrorWithView("Username can't be null!");

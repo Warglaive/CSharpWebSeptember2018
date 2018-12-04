@@ -63,6 +63,12 @@ namespace PandaWebApp.Controllers.Packages
             //take info from model and take all recipients from dbContext
             return this.Redirect("/home/index");
         }
+
+        public IHttpResponse Details()
+        {
+            //TODO: Implement
+            return this.View();
+        }
     }
 }
 //    //validations

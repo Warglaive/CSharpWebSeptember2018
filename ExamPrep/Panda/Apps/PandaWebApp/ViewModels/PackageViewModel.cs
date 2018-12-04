@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace PandaWebApp.ViewModels
+﻿namespace PandaWebApp.ViewModels
 {
     public class PackageViewModel
     {
