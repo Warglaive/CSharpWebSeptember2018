@@ -34,7 +34,11 @@ namespace PandaWebApp.Controllers
                 ShippedPackages = user.Packages.Where(x => x.Status == Status.Shipped),
                 DeliveredPackages = user.Packages.Where(x => x.Status == Status.Delivered)
             };
-
+            //foreach (var packagesDeliveredPackage in packages.PendingPackages)
+            //{
+            //    Console.WriteLine(packagesDeliveredPackage.Description);
+            //    packagesDeliveredPackage.Id
+            //}
             return this.View(packages);
         }
     }

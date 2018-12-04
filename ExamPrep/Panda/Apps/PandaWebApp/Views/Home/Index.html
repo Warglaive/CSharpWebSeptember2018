@@ -17,18 +17,27 @@
         <div class="row">
             <div class="col-sm customPackage">
                 <h2>Pending</h2>
-                <label>One of three columns</label>
-                <a class="btn btn-dark cButon" href="/packages/details" role="button">Details</a>
+                @foreach (var pendingPack in Model.PendingPackages)
+                {
+                <label>@pendingPack.Description</label>
+                <a class="btn btn-dark cButon" href="/packages/details/@pendingPack.Id" role="button">Details</a>
+                }
             </div>
             <div class="col-sm customPackage">
                 <h2>Shipped</h2>
-                <label>One of three columns</label>
-                <a class="btn btn-dark cButon" href="/packages/details" role="button">Details</a>
+                @foreach (var shippedPack in Model.ShippedPackages)
+                {
+                <label>@shippedPack.Description</label>
+                <a class="btn btn-dark cButon" href="/packages/details/@shippedPack.Id" role="button">Details</a>
+                }
             </div>
             <div class="col-sm customPackage">
                 <h2>Delivered</h2>
-                <label>One of three columns</label>
-                <a class="btn btn-dark cButon" href="/packages/details" role="button">Details</a>
+                @foreach (var deliveredPack in Model.DeliveredPackages)
+                {
+                <label>@deliveredPack.Description</label>
+                <a class="btn btn-dark cButon" href="/packages/details/@deliveredPack.Id" role="button">Details</a>
+                }
             </div>
         </div>
     </div>
