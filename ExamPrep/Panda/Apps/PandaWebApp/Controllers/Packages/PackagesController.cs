@@ -25,10 +25,9 @@ namespace PandaWebApp.Controllers.Packages
         [HttpPost]
         public IHttpResponse Create(PackageViewModel model)
         {
-            //create recipient
             var recipient = this.ApplicationDbContext
-                .Users
-                .FirstOrDefault(x => x.Username == model.Recipient);
+            .Users
+            .FirstOrDefault(x => x.Username == model.Recipient);
 
             //create package and set recipient to it
             var package = new Package
@@ -41,6 +40,17 @@ namespace PandaWebApp.Controllers.Packages
                 Status = Status.Pending
                 //EstimatedDeliveryDate = null
             };
+
+            if (string.IsNullOrEmpty(package.Description) || string.IsNullOrWhiteSpace(package.Description) || package.Description == null)
+            {
+                return BadRequestError("Description can't be empty or null");
+            }
+
+            if (string.IsNullOrEmpty(package.ShippingAddress) || string.IsNullOrWhiteSpace(package.ShippingAddress) ||
+                package.ShippingAddress == null)
+            {
+                return BadRequestError("Shipping Address can't be empty or null");
+            }
 
             this.ApplicationDbContext.Packages.Add(package);
             this.ApplicationDbContext.SaveChanges();
@@ -65,6 +75,7 @@ namespace PandaWebApp.Controllers.Packages
         }
 
         //[HttpGet("/packages/PackageById")]
+        [Authorize]
         public IHttpResponse Details(int id)
         {
             //take needed package by its Id => pass it to the view => fill the view with info.
@@ -78,12 +89,3 @@ namespace PandaWebApp.Controllers.Packages
         }
     }
 }
-//    //validations
-
-//    if (string.IsNullOrEmpty(package.Description) || string.IsNullOrWhiteSpace(package.Description) || package.Description == null)
-//    {
-//    return BadRequestError("Description can't be empty or null");
-//}
-//if (string.IsNullOrEmpty(package.ShippingAddress) || string.IsNullOrWhiteSpace(package.ShippingAddress) || package.ShippingAddress == null)
-//{
-//return BadRequestError("Shipping Address can't be empty or null");
