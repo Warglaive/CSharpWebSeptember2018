@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PandaWebApp.Models;
 using PandaWebApp.Models.Enums;
 using PandaWebApp.ViewModels;
@@ -27,7 +29,7 @@ namespace PandaWebApp.Controllers.Packages
         {
             var recipient = this.ApplicationDbContext
             .Users
-            .FirstOrDefault(x => x.Username == model.Recipient);
+            .FirstOrDefault(x => x.Username == model.Recipient.Username);
 
             //create package and set recipient to it
             var package = new Package
@@ -74,17 +76,38 @@ namespace PandaWebApp.Controllers.Packages
             return this.Redirect("/home/index");
         }
 
-        //[HttpGet("/packages/PackageById")]
         [Authorize]
         public IHttpResponse Details(int id)
         {
             //take needed package by its Id => pass it to the view => fill the view with info.
-            var currentPackage = this.ApplicationDbContext.Packages.FirstOrDefault(x => x.Id == id);
+            var currentPackage = this.ApplicationDbContext
+                .Packages
+                .Include(x => x.Recipient)
+                .FirstOrDefault(x => x.Id == id);
+
             if (currentPackage == null)
             {
                 return BadRequestError("Product not found.");
             }
-            var viewModel = currentPackage.To<PackageViewModel>();
+            //Casting with .To<viewModel> was causing error
+            var viewModel = new PackageViewModel
+            {
+                Description = currentPackage.Description,
+                ShippingAddress = currentPackage.ShippingAddress,
+                Weight = currentPackage.Weight,
+                Recipient = currentPackage.Recipient,
+                Status = currentPackage.Status,
+                EstimatedDeliveryDate = currentPackage.EstimatedDeliveryDate.ToString(CultureInfo.InvariantCulture)
+            };
+            if (currentPackage.Status == Status.Pending)
+            {
+                viewModel.EstimatedDeliveryDate = "N/A";
+            }
+
+            else if (currentPackage.Status == Status.Delivered)
+            {
+                viewModel.EstimatedDeliveryDate = "Delivered";
+            }
             return this.View(viewModel);
         }
     }
