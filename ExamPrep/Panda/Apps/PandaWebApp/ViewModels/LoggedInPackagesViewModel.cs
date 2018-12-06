@@ -3,9 +3,9 @@ using PandaWebApp.Models;
 
 namespace PandaWebApp.ViewModels
 {
-    public class UserPackagesViewModel
+    public class LoggedInPackagesViewModel
     {
-        public UserPackagesViewModel()
+        public LoggedInPackagesViewModel()
         {
             this.PendingPackages = new List<Package>();
             this.ShippedPackages = new List<Package>();
