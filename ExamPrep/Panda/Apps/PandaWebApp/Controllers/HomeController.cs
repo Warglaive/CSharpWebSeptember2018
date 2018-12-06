@@ -32,9 +32,25 @@ namespace PandaWebApp.Controllers
 
             var viewModel = new LoggedInPackagesViewModel
             {
-                PendingPackages = this.ApplicationDbContext.Packages.Where(x => x.Status == Status.Pending).ToList(),
-                ShippedPackages = this.ApplicationDbContext.Packages.Where(x => x.Status == Status.Shipped).ToList(),
-                DeliveredPackages = this.ApplicationDbContext.Packages.Where(x => x.Status == Status.Delivered).ToList()
+                PendingPackages = this.ApplicationDbContext
+                    .Packages
+                    .Where(
+                        x => x.Status == Status.Pending
+                             &&
+                             this.User.Username == x.Recipient.Username)
+                    .ToList(),
+
+
+                ShippedPackages = this.ApplicationDbContext.Packages
+                    .Where(x => x.Status == Status.Shipped 
+                                &&
+                                this.User.Username == x.Recipient.Username)
+                    .ToList(),
+
+                DeliveredPackages = this.ApplicationDbContext.Packages
+                    .Where(x => x.Status == Status.Delivered 
+                                && this.User.Username == x.Recipient.Username)
+                    .ToList()
             };
 
             //SHOULD BE SPLITTED, OTHERWISE ERROR AND NAMED ViewModel
