@@ -15,8 +15,10 @@ namespace PandaWebApp.Controllers.Packages
         [HttpGet("/packages/create")]
         public IHttpResponse Create()
         {
-            var users = ApplicationDbContext.Users;
-            var model = new UserViewModel();
+            var users = ApplicationDbContext.Users.ToList();
+
+            var model = new PackageViewModel();
+
             foreach (var user in users)
             {
                 model.UsersAllNames.Add(user.Username);
@@ -29,7 +31,7 @@ namespace PandaWebApp.Controllers.Packages
         {
             var recipient = this.ApplicationDbContext
             .Users
-            .FirstOrDefault(x => x.Username == model.Recipient.Username);
+            .FirstOrDefault(x => x.Username == model.ChosenRecipient);
 
             //create package and set recipient to it
             var package = new Package

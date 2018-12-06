@@ -19,11 +19,11 @@
             <label for="recipient" class="text-center text-torshia">Recipient</label>
             <!--DROPDOWN-->
             <!--DONT NAME IT user, causing erorr!-->
-            <select class="form-control" name="Recipient">
+            <select class="form-control" name="ChosenRecipient">
                 <option selected="selected" disabled="disabled">-- Choose Recipient --</option>
                 @foreach (var username in Model.UsersAllNames)
                 {
-                <option type="s">@username</option>
+                <option>@username</option>
                 }
             </select>
             <!--DROPDOWN-->

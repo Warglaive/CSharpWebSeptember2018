@@ -1,14 +1,9 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace PandaWebApp.ViewModels
 {
     public class UserViewModel
     {
-        public UserViewModel()
-        {
-            this.UsersAllNames = new HashSet<string>();
-        }
         [Required]
         public string Username { get; set; }
 
@@ -20,7 +15,5 @@ namespace PandaWebApp.ViewModels
 
         [Required]
         public string Email { get; set; }
-
-        public HashSet<string> UsersAllNames { get; set; }
     }
 }
