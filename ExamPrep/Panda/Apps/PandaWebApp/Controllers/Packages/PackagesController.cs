@@ -112,5 +112,22 @@ namespace PandaWebApp.Controllers.Packages
             }
             return this.View(viewModel);
         }
+
+        public IHttpResponse Pending()
+        {
+            //take all pending packages, send to view /packages/pending
+            var packages = this.ApplicationDbContext
+                .Packages
+                .Include(x => x.Recipient)
+                .Where(x => x.Status == Status.Pending)
+                .ToList();
+
+            var viewModel = new LoggedInPackagesViewModel
+            {
+                PendingPackages = packages
+            };
+           
+            return this.View(viewModel);
+        }
     }
 }
