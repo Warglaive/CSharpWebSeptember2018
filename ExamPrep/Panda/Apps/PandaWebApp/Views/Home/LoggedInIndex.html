@@ -1,5 +1,12 @@
 ﻿<main class="mt-3">
+    @if (User.Role == "Admin")
+    {
+    <h1 class="text-center text-torshia">Hello, Administrator @User.Username!</h1>
+    }
+    @else
+    {
     <h1 class="text-center text-torshia">Hello, @User.Username!</h1>
+    }
     <hr class="bg-panda w-100 hr-2" />
     <!--show all packages for current user-->
     <div class="container">

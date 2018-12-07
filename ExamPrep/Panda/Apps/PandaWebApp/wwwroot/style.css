@@ -59,3 +59,7 @@ footer {
     margin: 5px;
     padding: 5px;
 }
+
+.customNavItem {
+    padding: 10px;
+}
