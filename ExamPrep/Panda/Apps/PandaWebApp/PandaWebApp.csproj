@@ -34,6 +34,12 @@
     <None Update="Views\Home\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Views\Packages\Delivered.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Views\Packages\Shipped.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Views\Packages\Pending.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

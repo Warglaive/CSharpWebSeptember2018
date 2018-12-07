@@ -113,6 +113,7 @@ namespace PandaWebApp.Controllers.Packages
             return this.View(viewModel);
         }
 
+        [Authorize("Admin")]
         public IHttpResponse Pending()
         {
             //take all pending packages, send to view /packages/pending
@@ -126,8 +127,76 @@ namespace PandaWebApp.Controllers.Packages
             {
                 PendingPackages = packages
             };
-           
+
             return this.View(viewModel);
+        }
+
+        [Authorize("Admin")]
+        public IHttpResponse Shipped()
+        {
+            //take all pending packages, send to view /packages/pending
+            var packages = this.ApplicationDbContext
+                .Packages
+                .Include(x => x.Recipient)
+                .Where(x => x.Status == Status.Shipped)
+                .ToList();
+
+            var viewModel = new LoggedInPackagesViewModel
+            {
+                ShippedPackages = packages
+            };
+
+            return this.View(viewModel);
+        }
+
+        [Authorize("Admin")]
+        public IHttpResponse Delivered()
+        {
+            //take all pending packages, send to view /packages/pending
+            var packages = this.ApplicationDbContext
+                .Packages
+                .Include(x => x.Recipient)
+                .Where(x => x.Status == Status.Delivered)
+                .ToList();
+
+            var viewModel = new LoggedInPackagesViewModel
+            {
+                DeliveredPackages = packages
+            };
+
+            return this.View(viewModel);
+        }
+
+        [Authorize("Admin")]
+        public IHttpResponse Ship(int id)
+        {
+            if (!this.ApplicationDbContext.Packages.Any(x => x.Id == id))
+            {
+                return BadRequestError("No such package");
+            }
+            this.ApplicationDbContext
+                .Packages.
+                FirstOrDefault(x => x.Id == id)
+                .Status = Status.Shipped;
+
+            this.ApplicationDbContext.SaveChanges();
+            return this.Redirect("/packages/shipped");
+        }
+
+        [Authorize("Admin")]
+        public IHttpResponse Deliver(int id)
+        {
+            if (!this.ApplicationDbContext.Packages.Any(x => x.Id == id))
+            {
+                return BadRequestError("No such package");
+            }
+            this.ApplicationDbContext
+                .Packages.
+                FirstOrDefault(x => x.Id == id)
+                .Status = Status.Delivered;
+
+            this.ApplicationDbContext.SaveChanges();
+            return this.Redirect("/packages/delivered");
         }
     }
 }
