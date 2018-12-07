@@ -179,6 +179,12 @@ namespace PandaWebApp.Controllers.Packages
                 FirstOrDefault(x => x.Id == id)
                 .Status = Status.Shipped;
 
+            var days = new Random().Next(20, 40);
+
+            this.ApplicationDbContext
+                .Packages.FirstOrDefault(x => x.Id == id)
+                .EstimatedDeliveryDate = DateTime.UtcNow.AddDays(days);
+
             this.ApplicationDbContext.SaveChanges();
             return this.Redirect("/packages/shipped");
         }
