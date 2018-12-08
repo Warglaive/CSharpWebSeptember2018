@@ -19,5 +19,7 @@ namespace TorshiaWebApp.ViewModels
         public string SectorFinances { get; set; }
         public string SectorInternal { get; set; }
         public string SectorManagement { get; set; }
+
+        public int Level { get; set; }
     }
 }

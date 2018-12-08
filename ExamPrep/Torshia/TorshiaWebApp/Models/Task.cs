@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TorshiaWebApp.Models
 {
@@ -28,5 +29,8 @@ namespace TorshiaWebApp.Models
         public ICollection<Participant> Participants { get; set; }
 
         public ICollection<Sector> AffectedSectors { get; set; }
+
+        [NotMapped]
+        public int Level { get; set; }
     }
 }

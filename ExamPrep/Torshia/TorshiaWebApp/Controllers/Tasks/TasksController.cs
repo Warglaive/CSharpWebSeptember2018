@@ -51,11 +51,16 @@ namespace TorshiaWebApp.Controllers.Tasks
                 Description = model.Description,
                 AffectedSectors = affectedSectors,
                 DueDate = model.DueDate,
-                Participants = participants
+                Participants = participants,
+                Level = affectedSectors.Count
             };
+            //save level to server
+            this.TasksStorage.Add(task);
+            //save everything else to Db
             this.TorshiaDbContext.Tasks.Add(task);
             this.TorshiaDbContext.SaveChanges();
             return this.Redirect("/");
+            //TODO: fix index page to show all tasks
         }
     }
 }
