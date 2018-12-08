@@ -11,7 +11,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SIS.Framework\SIS.Framework.csproj" />
-    <ProjectReference Include="..\Torshia.Data\Torshia.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>
