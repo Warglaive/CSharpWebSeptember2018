@@ -16,16 +16,33 @@ namespace TorshiaWebApp.Controllers.Tasks
         [HttpPost]
         public IHttpResponse Create(TaskViewModel model)
         {
-            var affectedSectors = new List<Sector>();
-            foreach (var name in model.AffectedSectors)
+            var participants = new List<Participant>();
+            foreach (var name in model.Participants.Split(","))
             {
-                affectedSectors.Add(new Sector { Name = name });
+                participants.Add(new Participant { Name = name.Trim() });
             }
 
-            var participants = new List<Participant>();
-            foreach (var name in model.Participants)
+            var affectedSectors = new List<Sector>();
+
+            if (model.SectorCustomers != null)
             {
-                participants.Add(new Participant { Name = name });
+                affectedSectors.Add(new Sector { Name = model.SectorCustomers });
+            }
+            if (model.SectorFinances != null)
+            {
+                affectedSectors.Add(new Sector { Name = model.SectorFinances });
+            }
+            if (model.SectorInternal != null)
+            {
+                affectedSectors.Add(new Sector { Name = model.SectorInternal });
+            }
+            if (model.SectorManagement != null)
+            {
+                affectedSectors.Add(new Sector { Name = model.SectorManagement });
+            }
+            if (model.SectorMarketing != null)
+            {
+                affectedSectors.Add(new Sector { Name = model.SectorMarketing });
             }
 
             var task = new Task
@@ -36,7 +53,9 @@ namespace TorshiaWebApp.Controllers.Tasks
                 DueDate = model.DueDate,
                 Participants = participants
             };
-            return this.View();
+            this.TorshiaDbContext.Tasks.Add(task);
+            this.TorshiaDbContext.SaveChanges();
+            return this.Redirect("/");
         }
     }
 }

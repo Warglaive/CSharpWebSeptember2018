@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace TorshiaWebApp.ViewModels
 {
     public class TaskViewModel
     {
-        public TaskViewModel()
-        {
-            this.Participants = new List<string>();
-            this.AffectedSectors = new List<string>();
-        }
         public string Title { get; set; }
 
         public DateTime DueDate { get; set; }
@@ -18,8 +12,12 @@ namespace TorshiaWebApp.ViewModels
 
         public bool IsReported { get; set; } = false;
 
-        public ICollection<string> Participants { get; set; }
+        public string Participants { get; set; }
 
-        public ICollection<string> AffectedSectors { get; set; }
+        public string SectorCustomers { get; set; }
+        public string SectorMarketing { get; set; }
+        public string SectorFinances { get; set; }
+        public string SectorInternal { get; set; }
+        public string SectorManagement { get; set; }
     }
 }
