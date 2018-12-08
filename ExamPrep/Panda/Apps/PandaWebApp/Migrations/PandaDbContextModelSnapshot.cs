@@ -25,24 +25,21 @@ namespace PandaWebApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .IsRequired();
 
                     b.Property<DateTime>("EstimatedDeliveryDate");
 
-                    b.Property<int>("ReceiptId");
-
                     b.Property<int>("RecipientId");
 
-                    b.Property<string>("ShippingAddress");
+                    b.Property<string>("ShippingAddress")
+                        .IsRequired();
 
                     b.Property<int>("Status");
 
                     b.Property<double>("Weight");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ReceiptId")
-                        .IsUnique();
 
                     b.HasIndex("RecipientId");
 
@@ -65,6 +62,8 @@ namespace PandaWebApp.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PackageId");
+
                     b.HasIndex("RecipientId");
 
                     b.ToTable("Receipts");
@@ -76,13 +75,16 @@ namespace PandaWebApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .IsRequired();
 
-                    b.Property<string>("Password");
+                    b.Property<string>("Password")
+                        .IsRequired();
 
                     b.Property<int>("Role");
 
-                    b.Property<string>("Username");
+                    b.Property<string>("Username")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -91,12 +93,7 @@ namespace PandaWebApp.Migrations
 
             modelBuilder.Entity("PandaWebApp.Models.Package", b =>
                 {
-                    b.HasOne("PandaWebApp.Models.Receipt", "Receipt")
-                        .WithOne("Package")
-                        .HasForeignKey("PandaWebApp.Models.Package", "ReceiptId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("PandaWebApp.Models.User", "Recipient")
+                    b.HasOne("PandaWebApp.Models.User", "RecipientUsername")
                         .WithMany("Packages")
                         .HasForeignKey("RecipientId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -104,7 +101,12 @@ namespace PandaWebApp.Migrations
 
             modelBuilder.Entity("PandaWebApp.Models.Receipt", b =>
                 {
-                    b.HasOne("PandaWebApp.Models.User", "Recipient")
+                    b.HasOne("PandaWebApp.Models.Package", "Package")
+                        .WithMany()
+                        .HasForeignKey("PackageId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("PandaWebApp.Models.User", "RecipientUsername")
                         .WithMany()
                         .HasForeignKey("RecipientId")
                         .OnDelete(DeleteBehavior.Cascade);

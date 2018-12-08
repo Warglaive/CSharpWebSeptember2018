@@ -9,10 +9,13 @@ namespace PandaWebApp.Models
         [Key]
         public int Id { get; set; }
 
+        [Required]
         public string Description { get; set; }
 
+        [Required]
         public double Weight { get; set; }
 
+        [Required]
         public string ShippingAddress { get; set; }
 
         public Status Status { get; set; }
@@ -22,7 +25,7 @@ namespace PandaWebApp.Models
         public User Recipient { get; set; }
         public int RecipientId { get; set; }
 
-        public Receipt Receipt { get; set; }
-        public int ReceiptId { get; set; }
+        //public Receipt Receipt { get; set; }
+        //public int ReceiptId { get; set; }
     }
 }
