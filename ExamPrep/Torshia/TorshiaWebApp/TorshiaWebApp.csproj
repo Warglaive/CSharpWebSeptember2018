@@ -34,10 +34,10 @@
     <None Update="Views\Home\LoggedInIndex.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Views\reports-all.html">
+    <None Update="Views\Tasks\Create.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Views\task-create.html">
+    <None Update="Views\task-report.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Views\task-details.html">

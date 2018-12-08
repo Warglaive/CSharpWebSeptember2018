@@ -1,5 +1,4 @@
-﻿using System;
-using SIS.HTTP.Responses;
+﻿using SIS.HTTP.Responses;
 
 namespace TorshiaWebApp.Controllers
 {
@@ -7,10 +6,16 @@ namespace TorshiaWebApp.Controllers
     {
         public IHttpResponse Index()
         {
-            Console.WriteLine(this.User.Username);
-            return this.View();
+            if (!this.User.IsLoggedIn)
+            {
+                return this.View();
+            }
+            return this.Redirect("/Home/LoggedInIndex");
+        }
 
-            //return this.View("/Home/LoggedInIndex");
+        public IHttpResponse LoggedInIndex()
+        {
+            return this.View();
         }
     }
 }
