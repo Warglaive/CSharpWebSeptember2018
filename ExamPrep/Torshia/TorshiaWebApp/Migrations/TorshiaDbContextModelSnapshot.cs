@@ -19,22 +19,6 @@ namespace TorshiaWebApp.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("TorshiaWebApp.Models.Participant", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("TaskId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TaskId");
-
-                    b.ToTable("Participants");
-                });
-
             modelBuilder.Entity("TorshiaWebApp.Models.Report", b =>
                 {
                     b.Property<string>("Id")
@@ -84,6 +68,9 @@ namespace TorshiaWebApp.Migrations
 
                     b.Property<bool>("IsReported");
 
+                    b.Property<string>("Participants")
+                        .IsRequired();
+
                     b.Property<string>("Title")
                         .IsRequired();
 
@@ -111,13 +98,6 @@ namespace TorshiaWebApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("TorshiaWebApp.Models.Participant", b =>
-                {
-                    b.HasOne("TorshiaWebApp.Models.Task")
-                        .WithMany("Participants")
-                        .HasForeignKey("TaskId");
                 });
 
             modelBuilder.Entity("TorshiaWebApp.Models.Report", b =>

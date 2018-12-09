@@ -9,7 +9,6 @@ namespace TorshiaWebApp.Models
     {
         public Task()
         {
-            this.Participants = new List<Participant>();
             this.AffectedSectors = new List<Sector>();
         }
 
@@ -26,8 +25,8 @@ namespace TorshiaWebApp.Models
 
         public string Description { get; set; }
 
-        public ICollection<Participant> Participants { get; set; }
-
+        [Required]
+        public string Participants { get; set; }
         public ICollection<Sector> AffectedSectors { get; set; }
 
         [NotMapped]

@@ -9,7 +9,6 @@ namespace TorshiaWebApp.Data
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Sector> AffectedSectors { get; set; }
-        public DbSet<Participant> Participants { get; set; }
 
         public TorshiaDbContext(DbContextOptions options) : base(options)
         {
@@ -25,10 +24,6 @@ namespace TorshiaWebApp.Data
             {
                 optionsBuilder.UseSqlServer(@"Server=WARGLAIVE\SQLEXPRESS;Database=TorshiaDb;Integrated Security=true;");
             }
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
         }
     }
 }

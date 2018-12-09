@@ -10,8 +10,8 @@ using TorshiaWebApp.Data;
 namespace TorshiaWebApp.Migrations
 {
     [DbContext(typeof(TorshiaDbContext))]
-    [Migration("20181208192517_test")]
-    partial class test
+    [Migration("20181209232958_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,22 +20,6 @@ namespace TorshiaWebApp.Migrations
                 .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("TorshiaWebApp.Models.Participant", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("TaskId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TaskId");
-
-                    b.ToTable("Participants");
-                });
 
             modelBuilder.Entity("TorshiaWebApp.Models.Report", b =>
                 {
@@ -86,6 +70,9 @@ namespace TorshiaWebApp.Migrations
 
                     b.Property<bool>("IsReported");
 
+                    b.Property<string>("Participants")
+                        .IsRequired();
+
                     b.Property<string>("Title")
                         .IsRequired();
 
@@ -113,13 +100,6 @@ namespace TorshiaWebApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("TorshiaWebApp.Models.Participant", b =>
-                {
-                    b.HasOne("TorshiaWebApp.Models.Task")
-                        .WithMany("Participants")
-                        .HasForeignKey("TaskId");
                 });
 
             modelBuilder.Entity("TorshiaWebApp.Models.Report", b =>

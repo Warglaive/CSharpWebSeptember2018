@@ -10,10 +10,8 @@ namespace TorshiaWebApp.Controllers
         public BaseController()
         {
             this.TorshiaDbContext = new TorshiaDbContext();
-            this.TasksStorage= new List<Task>();
         }
 
         public TorshiaDbContext TorshiaDbContext { get; set; }
-        public ICollection<Task> TasksStorage { get; set; }
     }
 }

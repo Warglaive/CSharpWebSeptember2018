@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using SIS.HTTP.Responses;
 using SIS.MvcFramework;
 using TorshiaWebApp.Models;
@@ -17,11 +18,7 @@ namespace TorshiaWebApp.Controllers.Tasks
         [HttpPost]
         public IHttpResponse Create(TaskViewModel model)
         {
-            var participants = new List<Participant>();
-            foreach (var name in model.Participants.Split(","))
-            {
-                participants.Add(new Participant { Name = name.Trim() });
-            }
+            var participants = model.Participants;
 
             var affectedSectors = new List<Sector>();
 
@@ -46,6 +43,11 @@ namespace TorshiaWebApp.Controllers.Tasks
                 affectedSectors.Add(new Sector { Name = model.SectorMarketing });
             }
 
+            if (string.IsNullOrEmpty(model.Participants) || string.IsNullOrWhiteSpace(model.Participants))
+            {
+                return BadRequestError("Participants cant be empty");
+            }
+
             var task = new Task
             {
                 Title = model.Title,
@@ -55,8 +57,6 @@ namespace TorshiaWebApp.Controllers.Tasks
                 Participants = participants,
                 Level = affectedSectors.Count
             };
-            //save level to server
-            this.TasksStorage.Add(task);
             //save everything else to Db
             this.TorshiaDbContext.Tasks.Add(task);
             this.TorshiaDbContext.SaveChanges();
@@ -66,19 +66,32 @@ namespace TorshiaWebApp.Controllers.Tasks
 
         public IHttpResponse Details(string id)
         {
-            var task = this.TorshiaDbContext.Tasks.FirstOrDefault(x => x.Id == id);
-            task.Level = this.TasksStorage.FirstOrDefault(x => x.Id == id).Level;
-            var participants = string.Empty;
+            //take level for current Task
+            var level = this.TorshiaDbContext.AffectedSectors.Count(x => x.TaskId == id);
+            var task = this.TorshiaDbContext.Tasks
+                .Include(x => x.AffectedSectors)
+                .FirstOrDefault(x => x.Id == id);
+            var affectedSectorsNames = new List<string>();
+            foreach (var sector in task.AffectedSectors)
+            {
+                affectedSectorsNames.Add(sector.Name);
+            }
 
+            if (task.Participants == null)
+            {
+                task.Participants = string.Empty;
+            }
             var viewModel = new TaskViewModel
             {
-                Level = task.Level,
+                Level = level,
                 Title = task.Title,
                 DueDate = task.DueDate,
-                Participants = task.Participants
+                Participants = task.Participants,
+                Description = task.Description,
+                AffectedSectors = affectedSectorsNames
 
             };
-            return this.View();
+            return this.View(viewModel);
         }
     }
 }

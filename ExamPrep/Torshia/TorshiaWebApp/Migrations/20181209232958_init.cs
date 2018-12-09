@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TorshiaWebApp.Migrations
 {
-    public partial class test : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,8 @@ namespace TorshiaWebApp.Migrations
                     Title = table.Column<string>(nullable: false),
                     DueDate = table.Column<DateTime>(nullable: false),
                     IsReported = table.Column<bool>(nullable: false),
-                    Description = table.Column<string>(nullable: true)
+                    Description = table.Column<string>(nullable: true),
+                    Participants = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -57,25 +58,6 @@ namespace TorshiaWebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Participants",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    TaskId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Participants", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Participants_Tasks_TaskId",
-                        column: x => x.TaskId,
-                        principalTable: "Tasks",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Reports",
                 columns: table => new
                 {
@@ -108,11 +90,6 @@ namespace TorshiaWebApp.Migrations
                 column: "TaskId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Participants_TaskId",
-                table: "Participants",
-                column: "TaskId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Reports_ReporterId",
                 table: "Reports",
                 column: "ReporterId");
@@ -127,9 +104,6 @@ namespace TorshiaWebApp.Migrations
         {
             migrationBuilder.DropTable(
                 name: "AffectedSectors");
-
-            migrationBuilder.DropTable(
-                name: "Participants");
 
             migrationBuilder.DropTable(
                 name: "Reports");
