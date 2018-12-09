@@ -43,6 +43,9 @@
     <None Update="Views\task-details.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Views\Tasks\Details.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Views\Users\login.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

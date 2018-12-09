@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using SIS.HTTP.Responses;
 using SIS.MvcFramework;
 using TorshiaWebApp.Models;
@@ -60,7 +61,24 @@ namespace TorshiaWebApp.Controllers.Tasks
             this.TorshiaDbContext.Tasks.Add(task);
             this.TorshiaDbContext.SaveChanges();
             return this.Redirect("/");
-            //TODO: fix index page to show all tasks
+        }
+
+
+        public IHttpResponse Details(string id)
+        {
+            var task = this.TorshiaDbContext.Tasks.FirstOrDefault(x => x.Id == id);
+            task.Level = this.TasksStorage.FirstOrDefault(x => x.Id == id).Level;
+            var participants = string.Empty;
+
+            var viewModel = new TaskViewModel
+            {
+                Level = task.Level,
+                Title = task.Title,
+                DueDate = task.DueDate,
+                Participants = task.Participants
+
+            };
+            return this.View();
         }
     }
 }

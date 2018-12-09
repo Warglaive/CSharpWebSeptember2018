@@ -10,13 +10,16 @@
             <div class="text-center">
                 <div class="card-body bg-torshia m-2" style="width: 14rem;">
                     {var title = @Model.AllTasks.ToList()[i].Title;}
-                    {var level = Model.AllTasks.ToList()[i].Level;}
+                    {var level = @Model.AllTasks.ToList()[i].Level;}
+                    {var id = @Model.AllTasks.ToList()[i].Id;}
                     <h5 class="card-title text-light">@title</h5>
                     <hr class="hr-2 bg-torshia bg-light" />
                     <p class="card-text text-light">@level</p>
                     <hr class="hr-2 bg-torshia bg-light" />
-                    <a href="#" class="card-link text-light bg-torshia border-0">Report</a>
-                    <a href="#" class="card-link text-light bg-torshia border-0">Details</a>
+
+                    <a href="/tasks/details?id=@id" class="card-link text-light bg-torshia border-0">Details</a>
+
+                    <a href="/tasks/reports" class="card-link text-light bg-torshia border-0">Report</a>
                 </div>
             </div>
             @if (i == 4)

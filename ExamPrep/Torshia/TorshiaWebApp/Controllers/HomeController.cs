@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using SIS.HTTP.Responses;
 using TorshiaWebApp.ViewModels;
@@ -33,6 +34,7 @@ namespace TorshiaWebApp.Controllers
                 }
                 var taskViewModel = new TaskViewModel
                 {
+                    Id = task.Id,
                     Title = task.Title,
                     Level = task.Level
                 };
@@ -41,7 +43,7 @@ namespace TorshiaWebApp.Controllers
 
             //for (int i = 0; i <= viewModel.AllTasks.ToList().Count; i++)
             //{
-            //    viewModel.AllTasks.ToList()[i] = null;
+            //    Console.WriteLine(viewModel.AllTasks.ToList()[i].Id);
             //}
             return this.View(viewModel);
         }

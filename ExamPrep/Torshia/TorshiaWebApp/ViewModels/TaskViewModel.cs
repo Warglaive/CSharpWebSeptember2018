@@ -9,6 +9,9 @@ namespace TorshiaWebApp.ViewModels
         {
             this.AllTasks = new List<TaskViewModel>();
         }
+
+        public string Id { get; set; }
+
         public string Title { get; set; }
 
         public DateTime DueDate { get; set; }
