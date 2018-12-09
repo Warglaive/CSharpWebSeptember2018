@@ -39,9 +39,9 @@ namespace TorshiaWebApp.Controllers
                 viewModel.AllTasks.Add(taskViewModel);
             }
 
-            //for (int i = 0; i < viewModel.AllTasks.ToList().Count; i++)
+            //for (int i = 0; i <= viewModel.AllTasks.ToList().Count; i++)
             //{
-            //    viewModel.AllTasks.ToList()[i]= null;
+            //    viewModel.AllTasks.ToList()[i] = null;
             //}
             return this.View(viewModel);
         }
