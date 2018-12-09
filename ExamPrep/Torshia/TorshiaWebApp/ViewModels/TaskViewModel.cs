@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TorshiaWebApp.ViewModels
 {
     public class TaskViewModel
     {
+        public TaskViewModel()
+        {
+            this.AllTasks = new List<TaskViewModel>();
+        }
         public string Title { get; set; }
 
         public DateTime DueDate { get; set; }
@@ -21,5 +26,7 @@ namespace TorshiaWebApp.ViewModels
         public string SectorManagement { get; set; }
 
         public int Level { get; set; }
+
+        public ICollection<TaskViewModel> AllTasks { get; set; }
     }
 }

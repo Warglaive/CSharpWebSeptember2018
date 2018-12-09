@@ -1,4 +1,7 @@
-﻿using SIS.HTTP.Responses;
+﻿using System.Collections.Generic;
+using System.Linq;
+using SIS.HTTP.Responses;
+using TorshiaWebApp.ViewModels;
 
 namespace TorshiaWebApp.Controllers
 {
@@ -15,7 +18,28 @@ namespace TorshiaWebApp.Controllers
 
         public IHttpResponse LoggedInIndex()
         {
-            return this.View();
+            var tasks = this.TorshiaDbContext.Tasks;
+            var affectedSectors = this.TorshiaDbContext.AffectedSectors;
+            var viewModel = new TaskViewModel();
+
+            foreach (var task in tasks)
+            {
+                foreach (var affectedSector in affectedSectors)
+                {
+                    if (task.Id == affectedSector.TaskId)
+                    {
+                        task.Level++;
+                    }
+                }
+                var taskViewModel = new TaskViewModel
+                {
+                    Title = task.Title,
+                    Level = task.Level
+                };
+                viewModel.AllTasks.Add(taskViewModel);
+            }
+            
+            return this.View(viewModel);
         }
     }
 }

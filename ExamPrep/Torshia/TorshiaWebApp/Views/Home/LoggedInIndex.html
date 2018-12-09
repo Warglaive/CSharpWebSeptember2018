@@ -2,8 +2,23 @@
     <h1 class="text-center text-torshia">Welcome @User.Username!</h1>
     <h1 class="text-center text-torshia">Have a nice tasking experience!</h1>
     <hr class="hr-2 bg-torshia" />
+    @foreach (var task in Model.AllTasks)
+    {
+    <div class="card text-center" style="width: 18rem;">
+        <div class="card-body bg-torshia">
+            <h5 class="card-title text-light">@task.Title</h5>
+            <hr class="hr-2 bg-torshia bg-light" />
+            <p class="card-text text-light">@task.Level</p>
+            <hr class="hr-2 bg-torshia bg-light" />
+            <a href="#" class="card-link text-light bg-torshia border-0">Report</a>
+            <a href="#" class="card-link text-light bg-torshia border-0">Details</a>
+        </div>
+    </div>
+    }
 
-    <div class="row">
+
+
+    <!--<div class="row">
         <div class="col-3 bg-torshia text-center">
             <h2 text-center bg-white>Title</h2>
             <hr class="hr-2 bg-torshia bg-light" />
@@ -19,6 +34,6 @@
     <div class="row">
         <div class="col-3">col-8</div>
         <div class="col-3">col-4</div>
-    </div>
+    </div>-->
 
 </main>
