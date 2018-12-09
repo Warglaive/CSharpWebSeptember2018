@@ -2,38 +2,44 @@
     <h1 class="text-center text-torshia">Welcome @User.Username!</h1>
     <h1 class="text-center text-torshia">Have a nice tasking experience!</h1>
     <hr class="hr-2 bg-torshia" />
-    @foreach (var task in Model.AllTasks)
-    {
-    <div class="card text-center" style="width: 18rem;">
-        <div class="card-body bg-torshia">
-            <h5 class="card-title text-light">@task.Title</h5>
-            <hr class="hr-2 bg-torshia bg-light" />
-            <p class="card-text text-light">@task.Level</p>
-            <hr class="hr-2 bg-torshia bg-light" />
-            <a href="#" class="card-link text-light bg-torshia border-0">Report</a>
-            <a href="#" class="card-link text-light bg-torshia border-0">Details</a>
+
+    <div class="container">
+        <div class="row align-items-start">
+            @for (var i = 0; i < Model.AllTasks.ToList().Count; i++)
+            {
+            @if (i == 0 || i == 4)
+            {
+            <div class="col">
+                <div class="text-center">
+                    <div class="card-body bg-torshia" style="width: 14rem;">
+                        {var title = @Model.AllTasks.ToList()[i].Title;}
+                        {var level = Model.AllTasks.ToList()[i].Level;}
+                        <h5 class="card-title text-light">@title</h5>
+                        <hr class="hr-2 bg-torshia bg-light" />
+                        <p class="card-text text-light">@level</p>
+                        <hr class="hr-2 bg-torshia bg-light" />
+                        <a href="#" class="card-link text-light bg-torshia border-0">Report</a>
+                        <a href="#" class="card-link text-light bg-torshia border-0">Details</a>
+                    </div>
+                </div>
+            </div>
+            }
+            @else
+            {
+            <div class="text-center">
+                <div class="card-body bg-torshia" style="width: 14rem;">
+                    {var title = @Model.AllTasks.ToList()[i].Title;}
+                    {var level = Model.AllTasks.ToList()[i].Level;}
+                    <h5 class="card-title text-light">@title</h5>
+                    <hr class="hr-2 bg-torshia bg-light" />
+                    <p class="card-text text-light">@level</p>
+                    <hr class="hr-2 bg-torshia bg-light" />
+                    <a href="#" class="card-link text-light bg-torshia border-0">Report</a>
+                    <a href="#" class="card-link text-light bg-torshia border-0">Details</a>
+                </div>
+            </div>
+            }
+            }
         </div>
     </div>
-    }
-
-
-
-    <!--<div class="row">
-        <div class="col-3 bg-torshia text-center">
-            <h2 text-center bg-white>Title</h2>
-            <hr class="hr-2 bg-torshia bg-light" />
-            <p text-light>Level 4</p>
-            <hr class="hr-2 bg-torshia bg-light" />
-            <input class="text-light bg-torshia border-0" type="submit" name="report" value="Report" />
-            <input class="text-light bg-torshia border-0" type="submit" name="details" value="Details" />
-        </div>
-        <div class="col-3">col-3</div>
-        <div class="col-3">col-3</div>
-        <div class="col-3">col-3</div>
-    </div>
-    <div class="row">
-        <div class="col-3">col-8</div>
-        <div class="col-3">col-4</div>
-    </div>-->
-
 </main>
