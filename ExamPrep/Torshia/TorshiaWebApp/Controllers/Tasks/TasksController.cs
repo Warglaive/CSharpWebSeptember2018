@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using Microsoft.EntityFrameworkCore;
 using SIS.HTTP.Responses;
 using SIS.MvcFramework;
@@ -16,6 +17,7 @@ namespace TorshiaWebApp.Controllers.Tasks
         }
 
         [HttpPost]
+        [Authorize("Admin")]
         public IHttpResponse Create(TaskViewModel model)
         {
             var participants = model.Participants;
@@ -63,15 +65,18 @@ namespace TorshiaWebApp.Controllers.Tasks
             return this.Redirect("/");
         }
 
-
+        [Authorize]
         public IHttpResponse Details(string id)
         {
             //take level for current Task
             var level = this.TorshiaDbContext.AffectedSectors.Count(x => x.TaskId == id);
+
             var task = this.TorshiaDbContext.Tasks
                 .Include(x => x.AffectedSectors)
                 .FirstOrDefault(x => x.Id == id);
+
             var affectedSectorsNames = new List<string>();
+
             foreach (var sector in task.AffectedSectors)
             {
                 affectedSectorsNames.Add(sector.Name);
@@ -81,6 +86,7 @@ namespace TorshiaWebApp.Controllers.Tasks
             {
                 task.Participants = string.Empty;
             }
+            var formattedSectors = string.Join(", ", affectedSectorsNames);
             var viewModel = new TaskViewModel
             {
                 Level = level,
@@ -88,7 +94,7 @@ namespace TorshiaWebApp.Controllers.Tasks
                 DueDate = task.DueDate,
                 Participants = task.Participants,
                 Description = task.Description,
-                AffectedSectors = affectedSectorsNames
+                AffectedSectors = formattedSectors
 
             };
             return this.View(viewModel);

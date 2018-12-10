@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using SIS.HTTP.Responses;
+using SIS.MvcFramework;
 using TorshiaWebApp.ViewModels;
 
 namespace TorshiaWebApp.Controllers
@@ -16,10 +18,10 @@ namespace TorshiaWebApp.Controllers
             }
             return this.Redirect("/Home/LoggedInIndex");
         }
-
+        [Authorize]
         public IHttpResponse LoggedInIndex()
         {
-            var tasks = this.TorshiaDbContext.Tasks;
+            var tasks = this.TorshiaDbContext.Tasks.Where(x => x.IsReported == false);
             var affectedSectors = this.TorshiaDbContext.AffectedSectors;
             var viewModel = new TaskViewModel();
 
@@ -40,11 +42,6 @@ namespace TorshiaWebApp.Controllers
                 };
                 viewModel.AllTasks.Add(taskViewModel);
             }
-
-            //for (int i = 0; i <= viewModel.AllTasks.ToList().Count; i++)
-            //{
-            //    Console.WriteLine(viewModel.AllTasks.ToList()[i].Id);
-            //}
             return this.View(viewModel);
         }
     }

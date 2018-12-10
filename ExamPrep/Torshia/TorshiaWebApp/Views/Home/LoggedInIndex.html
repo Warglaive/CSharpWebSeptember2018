@@ -1,6 +1,14 @@
 ﻿<main class="mt-3 mb-5">
+    @if (User.Role == "Admin")
+    {
+    <h1 class="text-center text-torshia">Welcome, Admin-@User.Username!</h1>
+    <h1 class="text-center text-torshia">Enjoy your work!</h1>
+    }
+    @else
+    {
     <h1 class="text-center text-torshia">Welcome @User.Username!</h1>
     <h1 class="text-center text-torshia">Have a nice tasking experience!</h1>
+    }
     <hr class="hr-2 bg-torshia" />
 
     <div class="container-fluid">
@@ -19,7 +27,7 @@
 
                     <a href="/tasks/details?id=@id" class="card-link text-light bg-torshia border-0">Details</a>
 
-                    <a href="/tasks/reports" class="card-link text-light bg-torshia border-0">Report</a>
+                    <a href="/tasks/report?id=@id" class="card-link text-light bg-torshia border-0">Report</a>
                 </div>
             </div>
             @if (i == 4)

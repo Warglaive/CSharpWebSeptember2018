@@ -34,6 +34,9 @@
     <None Update="Views\Home\LoggedInIndex.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Views\Reports\All.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Views\Tasks\Create.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -9,7 +9,6 @@ namespace TorshiaWebApp.ViewModels
         public TaskViewModel()
         {
             this.AllTasks = new List<TaskViewModel>();
-            this.AffectedSectors = new List<string>();
         }
 
         public string Id { get; set; }
@@ -33,6 +32,6 @@ namespace TorshiaWebApp.ViewModels
         public int Level { get; set; }
 
         public ICollection<TaskViewModel> AllTasks { get; set; }
-        public ICollection<string> AffectedSectors { get; set; }
+        public string AffectedSectors { get; set; }
     }
 }
