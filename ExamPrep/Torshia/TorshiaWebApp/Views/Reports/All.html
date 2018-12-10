@@ -12,28 +12,24 @@
             </tr>
         </thead>
         <tbody>
+            @for (var i = 0; i < @Model.AllReportViewModels.Count; i++)
+            {
+            {var title = @Model.AllReportViewModels.ToList()[i].TaskTitle;}
+            {var level = @Model.AllReportViewModels.ToList()[i].Level;}
+            {var status = @Model.AllReportViewModels.ToList()[i].Status;}
+            {var taskCounter = @i + 1;}
             <tr class="row">
-                <th class="col-md-1">1</th>
-                <td class="col-md-5">Fix Business Agenda</td>
-                <td class="col-md-1">4</td>
-                <td class="col-md-2">Completed</td>
+                <th class="col-md-1">@taskCounter</th>
+                <td class="col-md-5">@title</td>
+                <td class="col-md-1">@level</td>
+                <td class="col-md-2">@status</td>
                 <td class="col-md-2">
                     <div class="button-holder d-flex justify-content-between">
-                        <button class="btn bg-torshia text-white">Details</button>
+                        <a href="#" class="btn bg-torshia text-white">Details</a>
                     </div>
                 </td>
             </tr>
-            <tr class="row">
-                <th class="col-md-1">2</th>
-                <td class="col-md-5">Fix Something Else</td>
-                <td class="col-md-1">2</td>
-                <td class="col-md-2">Archived</td>
-                <td class="col-md-2">
-                    <div class="button-holder d-flex justify-content-between">
-                        <button class="btn bg-torshia text-white">Details</button>
-                    </div>
-                </td>
-            </tr>
+            }
         </tbody>
     </table>
 </main>

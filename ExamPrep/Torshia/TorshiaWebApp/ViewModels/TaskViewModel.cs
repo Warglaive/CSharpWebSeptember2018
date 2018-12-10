@@ -33,5 +33,6 @@ namespace TorshiaWebApp.ViewModels
 
         public ICollection<TaskViewModel> AllTasks { get; set; }
         public string AffectedSectors { get; set; }
+        public string Status { get; set; }
     }
 }

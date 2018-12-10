@@ -40,7 +40,7 @@
     <None Update="Views\Tasks\Create.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Views\task-report.html">
+    <None Update="Views\Tasks\Report.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Views\task-details.html">

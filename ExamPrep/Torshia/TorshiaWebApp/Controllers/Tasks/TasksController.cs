@@ -1,16 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Microsoft.EntityFrameworkCore;
 using SIS.HTTP.Responses;
 using SIS.MvcFramework;
 using TorshiaWebApp.Models;
+using TorshiaWebApp.Models.Enums;
 using TorshiaWebApp.ViewModels;
 
 namespace TorshiaWebApp.Controllers.Tasks
 {
     public class TasksController : BaseController
     {
+        [Authorize]
         public IHttpResponse Create()
         {
             return this.View();
@@ -98,6 +101,40 @@ namespace TorshiaWebApp.Controllers.Tasks
 
             };
             return this.View(viewModel);
+        }
+
+        [Authorize]
+        public IHttpResponse Report(string id)
+        {
+            var task = TorshiaDbContext.Tasks.FirstOrDefault(x => x.Id == id);
+            task.IsReported = true;
+
+            var currentUser = this.TorshiaDbContext
+                .Users
+                .FirstOrDefault(x => x.Username == this.User.Username);
+
+            //make custom random, 25 == 1/4 of 100
+            var randomDigit = new Random().Next(1, 100);
+
+            var report = new Report
+            {
+                ReportedOn = DateTime.UtcNow,
+                Reporter = currentUser,
+                ReporterId = currentUser.Id,
+                Task = task,
+                TaskId = task.Id,
+                Status = Status.Completed
+
+            };
+            if (randomDigit <= 25)
+            {
+                report.Status = Status.Archived;
+            }
+            this.TorshiaDbContext.Reports.Add(report);
+            this.TorshiaDbContext.SaveChanges();
+            //TODO:SET Isreported=true IN DB, CREATE REPORT On Report click
+            //TODO CREATE All reports page, and details about report
+            return this.Redirect("/");
         }
     }
 }

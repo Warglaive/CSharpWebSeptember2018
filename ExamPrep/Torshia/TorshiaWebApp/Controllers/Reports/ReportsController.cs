@@ -1,22 +1,36 @@
 ﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using SIS.HTTP.Responses;
+using SIS.MvcFramework;
+using TorshiaWebApp.ViewModels;
 
 namespace TorshiaWebApp.Controllers.Reports
 {
     public class ReportsController : BaseController
     {
-        public IHttpResponse Report(string id)
-        {
-            var task = TorshiaDbContext.Tasks.FirstOrDefault(x => x.Id == id);
-            task.IsReported = true;
-            //TODO:SET Isreported=true IN DB, CREATE REPORT On Report click
-            //TODO CREATE All reports page, and details about report
-            return this.View();
-        }
-
+        [Authorize("Admin")]
         public IHttpResponse All()
         {
-            return this.View();
+            var viewModel = new ReportViewModel();
+
+            var allReports = this.TorshiaDbContext.Reports.Include(x => x.Task).ThenInclude(x => x.AffectedSectors);
+            foreach (var report in allReports)
+            {
+                viewModel.AllReportViewModels.Add(new ReportViewModel
+                {
+                    TaskTitle = report.Task.Title,
+                    Level = report.Task.AffectedSectors.Count,
+                    Status = report.Status.ToString(),
+                    Task = report.Task
+
+                });
+            }
+
+            //for (int i = 0; i < viewModel.AllReportViewModels.Count; i++)
+            //{
+            //    viewModel.AllReportViewModels.ToList()[i].Level
+            //}
+            return this.View(viewModel);
         }
     }
 }
