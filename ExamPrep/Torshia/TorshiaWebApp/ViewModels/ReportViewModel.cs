@@ -18,5 +18,6 @@ namespace TorshiaWebApp.ViewModels
         public ICollection<ReportViewModel> AllReportViewModels { get; set; }
         public DateTime ReportedOn { get; set; }
         public string ReporterName { get; set; }
+        public string TaskAffectedSectors { get; set; }
     }
 }

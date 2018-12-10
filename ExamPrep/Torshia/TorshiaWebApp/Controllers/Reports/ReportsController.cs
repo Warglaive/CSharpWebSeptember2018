@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using SIS.HTTP.Responses;
 using SIS.MvcFramework;
@@ -37,6 +38,12 @@ namespace TorshiaWebApp.Controllers.Reports
                 .ThenInclude(x => x.AffectedSectors).FirstOrDefault(x => x.Id == id);
             var reporter = this.TorshiaDbContext.Users.FirstOrDefault(x => x.Id == report.ReporterId);
 
+            var sectors = new List<string>();
+            foreach (var sector in report.Task.AffectedSectors)
+            {
+                sectors.Add(sector.Name);
+            }
+
             var viewModel = new ReportViewModel
             {
                 Id = report.Id,
@@ -44,7 +51,8 @@ namespace TorshiaWebApp.Controllers.Reports
                 Status = report.Status.ToString(),
                 Task = report.Task,
                 ReportedOn = report.ReportedOn,
-                ReporterName = reporter.Username
+                ReporterName = reporter.Username,
+                TaskAffectedSectors = string.Join(", ", sectors)
             };
             return this.View(viewModel);
         }
