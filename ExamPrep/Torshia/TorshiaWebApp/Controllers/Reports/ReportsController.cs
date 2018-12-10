@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SIS.HTTP.Responses;
 using SIS.MvcFramework;
+using TorshiaWebApp.Models;
 using TorshiaWebApp.ViewModels;
 
 namespace TorshiaWebApp.Controllers.Reports
@@ -18,6 +19,7 @@ namespace TorshiaWebApp.Controllers.Reports
             {
                 viewModel.AllReportViewModels.Add(new ReportViewModel
                 {
+                    Id = report.Id,
                     TaskTitle = report.Task.Title,
                     Level = report.Task.AffectedSectors.Count,
                     Status = report.Status.ToString(),
@@ -25,11 +27,25 @@ namespace TorshiaWebApp.Controllers.Reports
 
                 });
             }
+            return this.View(viewModel);
+        }
 
-            //for (int i = 0; i < viewModel.AllReportViewModels.Count; i++)
-            //{
-            //    viewModel.AllReportViewModels.ToList()[i].Level
-            //}
+        [Authorize("Admin")]
+        public IHttpResponse Details(string id)
+        {
+            var report = this.TorshiaDbContext.Reports.Include(x => x.Task)
+                .ThenInclude(x => x.AffectedSectors).FirstOrDefault(x => x.Id == id);
+            var reporter = this.TorshiaDbContext.Users.FirstOrDefault(x => x.Id == report.ReporterId);
+
+            var viewModel = new ReportViewModel
+            {
+                Id = report.Id,
+                Level = report.Task.AffectedSectors.Count,
+                Status = report.Status.ToString(),
+                Task = report.Task,
+                ReportedOn = report.ReportedOn,
+                ReporterName = reporter.Username
+            };
             return this.View(viewModel);
         }
     }
