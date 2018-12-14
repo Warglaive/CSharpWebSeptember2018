@@ -9,8 +9,8 @@ using MishMashWebApp.Data;
 namespace MishMashWebApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181214165413_init")]
-    partial class init
+    [Migration("20181214211449_xaxa")]
+    partial class xaxa
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,7 +35,11 @@ namespace MishMashWebApp.Migrations
 
                     b.Property<int>("Type");
 
+                    b.Property<string>("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Channels");
                 });
@@ -44,6 +48,8 @@ namespace MishMashWebApp.Migrations
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ChannelId");
 
                     b.Property<string>("Email")
                         .IsRequired();
@@ -58,33 +64,23 @@ namespace MishMashWebApp.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ChannelId");
+
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("MishMashWebApp.Models.UsersChannels", b =>
+            modelBuilder.Entity("MishMashWebApp.Models.Channel", b =>
                 {
-                    b.Property<string>("UserId");
-
-                    b.Property<string>("ChannelId");
-
-                    b.HasKey("UserId", "ChannelId");
-
-                    b.HasIndex("ChannelId");
-
-                    b.ToTable("UsersChannels");
+                    b.HasOne("MishMashWebApp.Models.User", "User")
+                        .WithMany("FollowedChannels")
+                        .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("MishMashWebApp.Models.UsersChannels", b =>
+            modelBuilder.Entity("MishMashWebApp.Models.User", b =>
                 {
                     b.HasOne("MishMashWebApp.Models.Channel", "Channel")
                         .WithMany("Followers")
-                        .HasForeignKey("ChannelId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("MishMashWebApp.Models.User", "User")
-                        .WithMany("FollowedChannels")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ChannelId");
                 });
 #pragma warning restore 612, 618
         }

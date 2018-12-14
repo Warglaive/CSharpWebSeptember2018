@@ -1,9 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using MishMashWebApp.Models;
 
 namespace MishMashWebApp.ViewModels
 {
     public class ChannelViewModel
     {
+        public ChannelViewModel()
+        {
+            this.SeeOther = new List<Channel>();
+            this.SuggestedChannels = new List<Channel>();
+            this.YourChannels = new List<Channel>();
+        }
         public string Id { get; set; }
 
         [Required]
@@ -13,5 +21,9 @@ namespace MishMashWebApp.ViewModels
         public string Description { get; set; }
         public string Type { get; set; }
         public string Tags { get; set; }
+
+        public ICollection<Channel> YourChannels { get; set; }
+        public ICollection<Channel> SuggestedChannels { get; set; }
+        public ICollection<Channel> SeeOther { get; set; }
     }
 }

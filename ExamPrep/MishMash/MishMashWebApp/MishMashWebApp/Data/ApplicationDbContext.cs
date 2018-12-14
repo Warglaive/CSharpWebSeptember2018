@@ -7,7 +7,6 @@ namespace MishMashWebApp.Data
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Channel> Channels { get; set; }
-        public DbSet<UsersChannels> UsersChannels { get; set; }
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
@@ -27,17 +26,15 @@ namespace MishMashWebApp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UsersChannels>()
-                .HasKey(x => new
-                {
-                    x.UserId,
-                    x.ChannelId
-                });
-            modelBuilder.Entity<UsersChannels>().HasOne(x => x.User)
-                .WithMany(x => x.FollowedChannels).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Channel>()
+                .HasMany(x => x.Followers)
+                .WithOne(x => x.Channel)
+                .HasForeignKey(x => x.ChannelId);
 
-            modelBuilder.Entity<UsersChannels>().HasOne(x => x.Channel)
-                .WithMany(x => x.Followers).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<User>()
+                .HasMany(x => x.FollowedChannels)
+                .WithOne(x => x.User)
+                .HasForeignKey(x => x.UserId);
         }
     }
 }

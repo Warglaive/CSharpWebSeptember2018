@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using MishMashWebApp.Models;
 using MishMashWebApp.ViewModels;
 using SIS.HTTP.Responses;
@@ -25,6 +26,18 @@ namespace MishMashWebApp.Controllers.Channels
                 Type = Enum.Parse<Type>(model.Type)
             };
             this.ApplicationDbContext.Channels.Add(channel);
+            this.ApplicationDbContext.SaveChanges();
+            return this.Redirect("/");
+        }
+
+        public IHttpResponse Follow(string id)
+        {
+            var user = this.ApplicationDbContext.Users.FirstOrDefault(x => x.Username == this.User.Username);
+
+            var channel = this.ApplicationDbContext.Channels.FirstOrDefault(x => x.Id == id);
+
+            user.Channel = channel;
+            user.FollowedChannels.Add(channel);
             this.ApplicationDbContext.SaveChanges();
             return this.Redirect("/");
         }

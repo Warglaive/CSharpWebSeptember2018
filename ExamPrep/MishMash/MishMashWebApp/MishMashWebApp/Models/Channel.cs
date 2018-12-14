@@ -8,7 +8,7 @@ namespace MishMashWebApp.Models
     {
         public Channel()
         {
-            this.Followers = new List<UsersChannels>();
+            this.Followers = new List<User>();
         }
         [Key]
         public string Id { get; set; }
@@ -20,6 +20,8 @@ namespace MishMashWebApp.Models
         public string Description { get; set; }
         public Type Type { get; set; }
         public string Tags { get; set; }
-        public ICollection<UsersChannels> Followers { get; set; }
+        public ICollection<User> Followers { get; set; }
+        public User User { get; set; }
+        public string UserId { get; set; }
     }
 }

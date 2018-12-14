@@ -1,8 +1,89 @@
 ﻿<main>
-    <div class="jumbotron mt-3 bg-mishmash">
-        <h1 class="text-white">Welcome, @User.Username!</h1>
-        <hr class="bg-white hr-2" />
-        <h3 class="text-white"><a href="/users/login">Login</a> if you have an account.</h3>
-        <h3 class="text-white"><a href="/users/register">Register</a> if you don't.</h3>
+    <div class="jumbotron mt-3 text-mishmash">
+        @if (User.Role == "Admin")
+        {
+        <h1 class="text-center text-mishmash">Welcome, @User.Username!</h1>
+        }
+        @else
+        {
+        <h1 class="text-center  text-mishmash">Welcome, @User.Username!</h1>
+        }
+        <h3>Your Channels</h3>
+        <hr class="hr-2 bg-mishmash w-100 mt-4" />
+
+        <div class="container-fluid">
+            <div class="row">
+                @foreach (var channel in @Model.YourChannels)
+                {
+                <div class="text-center">
+                    <div class="card-body bg-mishmash m-2" style="width: 14rem;">
+                        <h5 class="card-title text-light">@channel.Name</h5>
+                        <hr class="hr-2 bg-mishmash bg-light" />
+                        <p class="card-text text-light">@channel.Description</p>
+                        <hr class="hr-2 bg-mishmash bg-light" />
+                        <p class="card-text text-light">@channel.Followers.Count</p>
+                        <hr class="hr-2 bg-mishmash bg-light" />
+
+                        <a href="/channels/follow?id=@channel.Id" class="card-link text-light text-mishmash border-0">Follow</a>
+                        <a href="/channels/details?id=@channel.Id" class="card-link text-light text-mishmash border-0">Details</a>
+
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+
+        <h3>Suggested</h3>
+        <hr class="hr-2 bg-mishmash w-100 mt-4" />
+
+        <div class="container-fluid">
+            <div class="row">
+                @foreach (var channel in @Model.SuggestedChannels)
+                {
+                <div class="text-center">
+                    <div class="card-body bg-mishmash m-2" style="width: 14rem;">
+                        <h5 class="card-title text-light">@channel.Name</h5>
+                        <hr class="hr-2 bg-mishmash bg-light" />
+                        <p class="card-text text-light">@channel.Description</p>
+                        <hr class="hr-2 bg-mishmash bg-light" />
+                        <p class="card-text text-light">@channel.Followers.Count</p>
+                        <hr class="hr-2 bg-mishmash bg-light" />
+
+                        <a href="/channels/follow?id=@channel.Id" class="card-link text-light text-mishmash border-0">Follow</a>
+                        <a href="/channels/details?id=@channel.Id" class="card-link text-light text-mishmash border-0">Details</a>
+
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+
+
+        <h3>See Other</h3>
+        <hr class="hr-2 bg-mishmash w-100 mt-4" />
+
+        <div class="container-fluid">
+            <div class="row">
+                @foreach (var channel in @Model.SeeOther)
+                {
+                <div class="text-center">
+                    <div class="card-body bg-mishmash m-2" style="width: 14rem;">
+                        <h5 class="card-title text-light">@channel.Name</h5>
+                        <hr class="hr-2 bg-mishmash bg-light" />
+                        <p class="card-text text-light">@channel.Description</p>
+                        <hr class="hr-2 bg-mishmash bg-light" />
+                        <p class="card-text text-light">@channel.Followers.Count</p>
+                        <hr class="hr-2 bg-mishmash bg-light" />
+
+                        <a href="/channels/follow?id=@channel.Id" class="card-link text-light text-mishmash border-0">Follow</a>
+                        <a href="/channels/details?id=@channel.Id" class="card-link text-light text-mishmash border-0">Details</a>
+
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+
+
     </div>
 </main>
