@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MishMashWebApp.Data;
 
 namespace MishMashWebApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181214232007_TagEntityAdded")]
+    partial class TagEntityAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,8 +31,6 @@ namespace MishMashWebApp.Migrations
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<string>("TagId");
-
                     b.Property<int>("Type");
 
                     b.HasKey("Id");
@@ -43,8 +43,7 @@ namespace MishMashWebApp.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ChannelId")
-                        .IsRequired();
+                    b.Property<string>("ChannelId");
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -94,8 +93,7 @@ namespace MishMashWebApp.Migrations
                 {
                     b.HasOne("MishMashWebApp.Models.Channel")
                         .WithMany("Tags")
-                        .HasForeignKey("ChannelId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ChannelId");
                 });
 
             modelBuilder.Entity("MishMashWebApp.Models.UserChannel", b =>

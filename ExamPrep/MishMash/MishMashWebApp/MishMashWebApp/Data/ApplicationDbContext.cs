@@ -7,6 +7,8 @@ namespace MishMashWebApp.Data
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Channel> Channels { get; set; }
+        public DbSet<UserChannel> UserChannels { get; set; }
+        public DbSet<Tag> Tags { get; set; }
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
@@ -26,15 +28,32 @@ namespace MishMashWebApp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Channel>()
-                .HasMany(x => x.Followers)
-                .WithOne(x => x.Channel)
-                .HasForeignKey(x => x.ChannelId);
+            modelBuilder.Entity<UserChannel>()
+                .HasKey(x => new
+                {
+                    x.ChannelId,
+                    x.UserId
+                });
+            modelBuilder.Entity<UserChannel>().HasOne(x => x.Channel)
+                .WithMany(x => x.Followers)
+                .HasForeignKey(x => x.ChannelId)
+                .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<User>()
-                .HasMany(x => x.FollowedChannels)
-                .WithOne(x => x.User)
-                .HasForeignKey(x => x.UserId);
+            modelBuilder.Entity<UserChannel>().HasOne(x => x.User)
+                .WithMany(x => x.FollowedChannels)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
+            //modelBuilder.Entity<Channel>()
+            //    .HasMany(x => x.Followers)
+            //    .WithOne(x => x.Channel)
+            //    .HasForeignKey(x => x.ChannelId);
+
+            //modelBuilder.Entity<User>()
+            //    .HasMany(x => x.FollowedChannels)
+            //    .WithOne(x => x.User)
+            //    .HasForeignKey(x => x.UserId);
         }
     }
 }

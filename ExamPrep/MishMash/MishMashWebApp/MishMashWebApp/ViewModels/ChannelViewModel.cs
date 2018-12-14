@@ -9,8 +9,8 @@ namespace MishMashWebApp.ViewModels
         public ChannelViewModel()
         {
             this.SeeOther = new List<Channel>();
-            this.SuggestedChannels = new List<Channel>();
-            this.YourChannels = new List<Channel>();
+            this.SuggestedChannels = new HashSet<Channel>();
+            this.YourChannels = new List<UserChannel>();
         }
         public string Id { get; set; }
 
@@ -22,7 +22,7 @@ namespace MishMashWebApp.ViewModels
         public string Type { get; set; }
         public string Tags { get; set; }
 
-        public ICollection<Channel> YourChannels { get; set; }
+        public ICollection<UserChannel> YourChannels { get; set; }
         public ICollection<Channel> SuggestedChannels { get; set; }
         public ICollection<Channel> SeeOther { get; set; }
     }

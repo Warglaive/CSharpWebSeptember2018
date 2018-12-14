@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MishMashWebApp.Data;
 
 namespace MishMashWebApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181214224442_AddedDBSet")]
+    partial class AddedDBSet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,31 +31,13 @@ namespace MishMashWebApp.Migrations
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<string>("TagId");
+                    b.Property<string>("Tags");
 
                     b.Property<int>("Type");
 
                     b.HasKey("Id");
 
                     b.ToTable("Channels");
-                });
-
-            modelBuilder.Entity("MishMashWebApp.Models.Tag", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ChannelId")
-                        .IsRequired();
-
-                    b.Property<string>("Name")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ChannelId");
-
-                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("MishMashWebApp.Models.User", b =>
@@ -88,14 +72,6 @@ namespace MishMashWebApp.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserChannels");
-                });
-
-            modelBuilder.Entity("MishMashWebApp.Models.Tag", b =>
-                {
-                    b.HasOne("MishMashWebApp.Models.Channel")
-                        .WithMany("Tags")
-                        .HasForeignKey("ChannelId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MishMashWebApp.Models.UserChannel", b =>

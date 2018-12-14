@@ -8,7 +8,7 @@ namespace MishMashWebApp.Models
     {
         public User()
         {
-            this.FollowedChannels = new HashSet<Channel>();
+            this.FollowedChannels = new HashSet<UserChannel>();
         }
         [Key]
         public string Id { get; set; }
@@ -21,9 +21,7 @@ namespace MishMashWebApp.Models
 
         [Required]
         public string Email { get; set; }
-        public ICollection<Channel> FollowedChannels { get; set; }
-        public Channel Channel { get; set; }
-        public string ChannelId { get; set; }
+        public ICollection<UserChannel> FollowedChannels { get; set; }
         public Role Role { get; set; }
     }
 }

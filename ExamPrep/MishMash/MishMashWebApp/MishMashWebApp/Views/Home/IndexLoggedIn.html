@@ -17,15 +17,15 @@
                 {
                 <div class="text-center">
                     <div class="card-body bg-mishmash m-2" style="width: 14rem;">
-                        <h5 class="card-title text-light">@channel.Name</h5>
+                        <h5 class="card-title text-light">@channel.Channel.Name</h5>
                         <hr class="hr-2 bg-mishmash bg-light" />
-                        <p class="card-text text-light">@channel.Description</p>
+                        <p class="card-text text-light">@channel.Channel.Description</p>
                         <hr class="hr-2 bg-mishmash bg-light" />
-                        <p class="card-text text-light">@channel.Followers.Count</p>
+                        <p class="card-text text-light">@channel.Channel.Followers.Count</p>
                         <hr class="hr-2 bg-mishmash bg-light" />
 
-                        <a href="/channels/follow?id=@channel.Id" class="card-link text-light text-mishmash border-0">Follow</a>
-                        <a href="/channels/details?id=@channel.Id" class="card-link text-light text-mishmash border-0">Details</a>
+                        <a href="/channels/follow?id=@channel.Channel.Id" class="card-link text-light text-mishmash border-0">Follow</a>
+                        <a href="/channels/details?id=@channel.Channel.Id" class="card-link text-light text-mishmash border-0">Details</a>
 
                     </div>
                 </div>
