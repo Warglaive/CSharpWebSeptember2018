@@ -1,0 +1,48 @@
+﻿<main class="mt-3">
+    <h1 class="text-center text-mishmash">Create Channel</h1>
+    <hr class="bg-mishmash w-50 hr-2" />
+    <form class="mx-auto w-50" method="post" action="/channels/create" id="createForm">
+        <div class="form-group">
+            <label for="name" class="text-mishmash">Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Name..." name="Name">
+        </div>
+        <div class="form-group">
+            <label for="description" class="text-mishmash">Description</label>
+            <textarea type="text-area" class="form-control" id="description" placeholder="Description..." name="Description" form="createForm">
+        </textarea>
+        </div>
+        <label for="tags" class="text-mishmash">Tags</label>
+        <input type="text" class="form-control" id="tags" placeholder="Tag1, Tag2, Tag3..." name="Tags">
+
+        <h3 class="text-center text-mishmash">Channel Type</h3>
+        <hr class="hr-2 bg-mishmash w-50 mt-4" />
+        <div class="channel-type-holder mt-4 d-flex justify-content-around" name="AffectedSectors">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="gameCheckbox" value="Game" name="Type">
+                <label class="form-check-label" for="gameCheckbox">Game</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="motivationCheckbox" value="Motivation" name="Type">
+                <label class="form-check-label" for="motivationCheckbox">Motivation</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="lessonsCheckbox" value="Lessons" name="Type">
+                <label class="form-check-label" for="lessonsCheckbox">Lessons</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="radioCheckbox" value="Radio" name="Type">
+                <label class="form-check-label" for="radioCheckbox">Radio</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="otherCheckbox" value="Other" name="Type">
+                <label class="form-check-label" for="otherCheckbox">Other</label>
+            </div>
+        </div>
+        <hr class="hr-2 bg-mishmash w-50 mt-4" />
+
+
+        <div class="button-holder mt-4 d-flex justify-content-center">
+            <button type="submit" class="btn bg-mishmash text-white">Create</button>
+        </div>
+    </form>
+</main>

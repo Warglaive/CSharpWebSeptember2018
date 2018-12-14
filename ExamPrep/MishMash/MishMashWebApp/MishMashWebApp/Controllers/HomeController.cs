@@ -6,7 +6,12 @@ namespace MishMashWebApp.Controllers
     {
         public IHttpResponse Index()
         {
-            return this.View();
+            if (!this.User.IsLoggedIn)
+            {
+                return this.View();
+            }
+            //return channels
+            return this.View("/Home/IndexLoggedIn");
         }
     }
 }
