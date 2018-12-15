@@ -45,7 +45,7 @@ namespace MishMashWebApp.Controllers
             var allTags = this.ApplicationDbContext.Tags.ToList();
             foreach (var tag in allTags)
             {
-                if (myTags.Contains(tag))
+                if (!myTags.Contains(tag))
                 {
                     suggested = this.ApplicationDbContext.Channels
                         .Where(x => x.Id == tag.ChannelId).ToList();
