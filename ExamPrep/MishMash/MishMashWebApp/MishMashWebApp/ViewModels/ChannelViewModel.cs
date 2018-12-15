@@ -21,7 +21,7 @@ namespace MishMashWebApp.ViewModels
         public string Description { get; set; }
         public string Type { get; set; }
         public string Tags { get; set; }
-
+        public int Followers { get; set; }
         public ICollection<UserChannel> YourChannels { get; set; }
         public ICollection<Channel> SuggestedChannels { get; set; }
         public ICollection<Channel> SeeOther { get; set; }

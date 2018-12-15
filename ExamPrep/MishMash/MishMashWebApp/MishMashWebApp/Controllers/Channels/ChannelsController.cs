@@ -58,5 +58,26 @@ namespace MishMashWebApp.Controllers.Channels
             this.ApplicationDbContext.SaveChanges();
             return this.Redirect("/");
         }
+
+        public IHttpResponse Details(string id)
+        {
+            var channel = this.ApplicationDbContext.Channels.FirstOrDefault(x => x.Id == id);
+            var tags = string.Empty;
+            foreach (var channelTag in channel.Tags)
+            {
+                tags += channelTag;
+            }
+
+            var followers = this.ApplicationDbContext.UserChannels.Count(x => x.ChannelId == channel.Id);
+            var viewModel = new ChannelViewModel
+            {
+                Name = channel.Name,
+                Type = channel.Type.ToString(),
+                Description = channel.Description,
+                Followers = followers,
+                Tags = tags
+            };
+            return this.View(viewModel);
+        }
     }
 }

@@ -52,7 +52,6 @@ namespace MishMashWebApp.Controllers
                 }
             }
 
-
             var viewModel = new ChannelViewModel
             {
                 YourChannels = yourChannels,
