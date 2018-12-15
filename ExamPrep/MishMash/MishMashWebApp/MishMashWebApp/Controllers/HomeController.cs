@@ -15,17 +15,17 @@ namespace MishMashWebApp.Controllers
             {
                 return this.View();
             }
-            var currentUser = this.ApplicationDbContext.Users.FirstOrDefault(x => x.Username == this.User.Username);
+            var currentUser = this.ApplicationDbContext.Users.Include(x=>x.FollowedChannels).FirstOrDefault(x => x.Username == this.User.Username);
 
             var yourChannels = this.ApplicationDbContext
                 .UserChannels.Include(x => x.Channel).Include(x => x.Channel.Tags)
                 .Where(x => x.UserId == currentUser.Id).ToList();
             var seeOther = new List<Channel>();
-            var allChannels = this.ApplicationDbContext.Channels.ToList();
+            var allChannels = this.ApplicationDbContext.Channels.Include(x => x.Followers).ToList();
 
             foreach (var userChannel in allChannels)
             {
-                if (!this.ApplicationDbContext.UserChannels.Any(x => x.Channel.Id == userChannel.Id))
+                if (!this.ApplicationDbContext.UserChannels.Include(x => x.Channel).ThenInclude(x => x.Followers).Any(x => x.Channel.Id == userChannel.Id))
                 {
                     seeOther.Add(userChannel);
                 }
@@ -47,7 +47,7 @@ namespace MishMashWebApp.Controllers
             {
                 if (!myTags.Contains(tag))
                 {
-                    suggested = this.ApplicationDbContext.Channels
+                    suggested = this.ApplicationDbContext.Channels.Include(x => x.Followers)
                         .Where(x => x.Id == tag.ChannelId).ToList();
                 }
             }

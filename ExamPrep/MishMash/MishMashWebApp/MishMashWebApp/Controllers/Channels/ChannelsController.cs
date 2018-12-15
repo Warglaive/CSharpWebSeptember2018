@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using MishMashWebApp.Models;
 using MishMashWebApp.ViewModels;
 using SIS.HTTP.Responses;
@@ -61,11 +62,11 @@ namespace MishMashWebApp.Controllers.Channels
 
         public IHttpResponse Details(string id)
         {
-            var channel = this.ApplicationDbContext.Channels.FirstOrDefault(x => x.Id == id);
+            var channel = this.ApplicationDbContext.Channels.Include(x => x.Tags).FirstOrDefault(x => x.Id == id);
             var tags = string.Empty;
             foreach (var channelTag in channel.Tags)
             {
-                tags += channelTag;
+                tags += channelTag.Name;
             }
 
             var followers = this.ApplicationDbContext.UserChannels.Count(x => x.ChannelId == channel.Id);
