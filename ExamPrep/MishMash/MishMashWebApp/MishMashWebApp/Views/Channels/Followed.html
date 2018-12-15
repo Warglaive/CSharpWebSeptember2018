@@ -1,0 +1,37 @@
+﻿<main class="mt-3 mb-5">
+    <h1 class="text-center text-mishmash">Following</h1>
+    <hr class="hr-2 bg-mishmash" />
+    <table class="table w-75 mx-auto table-hover">
+        <thead>
+            <tr class="row">
+                <th class="col-md-1">#</th>
+                <th class="col-md-5">Channel</th>
+                <th class="col-md-1">Type</th>
+                <th class="col-md-2">Followers</th>
+                <th class="col-md-2">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < @Model.FollowedChannels.Count; i++)
+            {
+            {var id = @Model.FollowedChannels.ToList()[i].Id;}
+            {var name = @Model.FollowedChannels.ToList()[i].Name;}
+            {var type = @Model.FollowedChannels.ToList()[i].Type;}
+            {var followers = @Model.FollowedChannels.ToList()[i].Followers.Count;}
+            {var taskCounter = @i + 1;}
+            <tr class="row">
+                <th class="col-md-1">@taskCounter</th>
+                <td class="col-md-5">@name</td>
+                <td class="col-md-1">@type</td>
+                <td class="col-md-2">@followers</td>
+                <td class="col-md-2">
+                    <div class="button-holder d-flex justify-content-between">
+                        <a href="/channels/unfollow?id=@id" class="btn bg-mishmash text-white">Unfollow</a>
+                        <a href="/channels/details?id=@id" class="btn bg-mishmash text-white">Details</a>
+                    </div>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</main>

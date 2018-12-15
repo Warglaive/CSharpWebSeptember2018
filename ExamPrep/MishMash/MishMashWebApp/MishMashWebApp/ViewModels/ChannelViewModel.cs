@@ -11,6 +11,7 @@ namespace MishMashWebApp.ViewModels
             this.SeeOther = new List<Channel>();
             this.SuggestedChannels = new HashSet<Channel>();
             this.YourChannels = new List<UserChannel>();
+            this.FollowedChannels = new List<Channel>();
         }
         public string Id { get; set; }
 
@@ -25,5 +26,6 @@ namespace MishMashWebApp.ViewModels
         public ICollection<UserChannel> YourChannels { get; set; }
         public ICollection<Channel> SuggestedChannels { get; set; }
         public ICollection<Channel> SeeOther { get; set; }
+        public ICollection<Channel> FollowedChannels { get; set; }
     }
 }

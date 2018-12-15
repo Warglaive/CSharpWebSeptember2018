@@ -80,5 +80,44 @@ namespace MishMashWebApp.Controllers.Channels
             };
             return this.View(viewModel);
         }
+
+        public IHttpResponse Followed()
+        {
+            var currentUser = this
+                .ApplicationDbContext
+                .Users
+                .Include(x => x.FollowedChannels)
+                .ThenInclude(x => x.Channel)
+                .ThenInclude(x => x.Tags)
+                .FirstOrDefault(x => x.Username == this.User.Username);
+
+            var channels = currentUser.FollowedChannels.Select(x => x.Channel).ToList();
+            var viewModel = new ChannelViewModel
+            {
+                FollowedChannels = channels
+            };
+            for (int i = 0; i < viewModel.FollowedChannels.Count; i++)
+            {
+                Console.WriteLine(viewModel.FollowedChannels.ToList()[i].Id);
+            }
+
+            return this.View(viewModel);
+        }
+
+        public IHttpResponse Unfollow(string id)
+        {
+            var currentUser = this
+                .ApplicationDbContext
+                .Users
+                .Include(x => x.FollowedChannels)
+                .ThenInclude(x => x.Channel)
+                .ThenInclude(x => x.Tags)
+                .FirstOrDefault(x => x.Username == this.User.Username);
+            var toBeRemoved = currentUser.FollowedChannels.FirstOrDefault(x => x.ChannelId == id);
+
+            currentUser.FollowedChannels.Remove(toBeRemoved);
+            this.ApplicationDbContext.SaveChanges();
+            return this.Redirect("/channels/followed");
+        }
     }
 }
