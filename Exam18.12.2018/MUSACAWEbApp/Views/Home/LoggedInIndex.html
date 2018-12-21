@@ -1,0 +1,59 @@
+﻿<main class="mt-3">
+    <div class="jumbotron mt-3 bg-white">
+        <form method="post" action="/Home/LoggedInIndex">
+            <div class="form-row align-items-center">
+                <label class="form-check-label bg-white text-musaca border-musaca col-auto h-50">
+                    Product
+                </label>
+                <div class="col-auto">
+                    <label class="sr-only" for="inlineFormInput">Barcode</label>
+                    <input type="text" class="form-control mb-2" id="inlineFormInput" placeholder="Barcode..." name="Barcode">
+                </div>
+                <div class="col-auto">
+                    <div class="input-group mb-2">
+                        <input type="number" class="form-control" id="inlineFormInputGroup" placeholder="Quantity..." name="Quantity">
+                    </div>
+                </div>
+                <div class="col-auto">
+                </div>
+                <div class="col-auto">
+                    <input type="submit" class="btn btn-primary mb-2 text-white bg-musaca" value="Order" />
+                </div>
+            </div>
+        </form>
+        <hr class="bg-musaca hr-2" />
+        <div class="d-flex justify-content-between">
+            <table class="table table-hover table">
+                <thead>
+                    <tr class="row">
+                        <th scope="col" class="col-lg-8 d-flex justify-content-between"><h3>Product Name</h3></th>
+                        <th scope="col" class="col-lg-2 d-flex justify-content-between"><h3>Quantity</h3></th>
+                        <th scope="col" class="col-lg-2 d-flex justify-content-between"><h3>Price</h3></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="bg-musaca hr-2">
+                        @foreach (var activeOrder in @Model.ActiveOrders)
+                        {
+                    <tr class="row">
+                        <th scope="row" class="col-lg-8 d-flex justify-content-between"><h5>@activeOrder.Product.Name</h5></th>
+                        <td class="col-lg-2 d-flex justify-content-between"><h5>x@activeOrder.Quantity</h5></td>
+                        <td class="col-lg-2 d-flex justify-content-between"><h5>$@activeOrder.Product.Price</h5></td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <hr class="bg-musaca hr-2" />
+        <div class="fee-holder d-flex justify-content-start">
+            <form action="/receipts/create" method="get">
+                <button type="submit" name="cashOut" value="Cashout" class="btn btn-primary mb-2 text-white bg-musaca">
+                    Cashout
+                </button>
+            </form>
+        </div>
+        <div class="fee-holder d-flex justify-content-end">
+            <h3>@Model.TotalPrice</h3>
+        </div>
+    </div>
+</main>

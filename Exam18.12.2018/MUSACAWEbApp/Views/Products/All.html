@@ -1,0 +1,57 @@
+﻿<main class="mt-3">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between mt-4">
+            @for (var i = 0; i < Model.Products.ToList().Count; i++)
+            {
+            {var name = @Model.Products.ToList()[i].Name;}
+            {var price = @Model.Products.ToList()[i].Price;}
+            {var barcode = @Model.Products.ToList()[i].Barcode;}
+            {var picture = @Model.Products.ToList()[i].Picture;}
+            @if (i == 3)
+            {
+            <div class="product d-flex justify-content-between w-25">
+                <div class="image-holder w-25">
+                    <img src="@picture" alt="..." class="img-thumbnail">
+                </div>
+                <div class="data-holder w-75 px-3 mt-2">
+                    <div class="text-holder d-flex justify-content-between">
+                        <h6>Name:</h6>
+                        <h6>@name</h6>
+                    </div>
+                    <div class="text-holder d-flex justify-content-between">
+                        <h6>Price:</h6>
+                        <h6>$@price</h6>
+                    </div>
+                    <div class="text-holder d-flex justify-content-between">
+                        <h6>Barcode:</h6>
+                        <h6>@barcode</h6>
+                    </div>
+                </div>
+            </div>
+            }
+            @else
+            {
+            <div class="product d-flex justify-content-between w-25">
+                <div class="image-holder w-25">
+                    <img src="@picture" alt="..." class="img-thumbnail">
+                </div>
+                <div class="data-holder w-75 px-3 mt-2">
+                    <div class="text-holder d-flex justify-content-between">
+                        <h6>Name:</h6>
+                        <h6>@name</h6>
+                    </div>
+                    <div class="text-holder d-flex justify-content-between">
+                        <h6>Price:</h6>
+                        <h6>$@price</h6>
+                    </div>
+                    <div class="text-holder d-flex justify-content-between">
+                        <h6>Barcode:</h6>
+                        <h6>@barcode</h6>
+                    </div>
+                </div>
+            </div>
+            }
+            }
+        </div>
+    </div>
+</main>

@@ -1,0 +1,58 @@
+﻿<main class="mt-3">
+    <div class="jumbotron mt-3 bg-white">
+        <hr class="bg-musaca hr-2" />
+        <div class="container">
+            <h1 class="text-center">Receipt Details</h1>
+            <hr class="bg-musaca hr-2" />
+            <div class="d-flex justify-content-between">
+                <table class="table table-hover table">
+                    <tbody>
+                        @foreach (var order in @Model.Orders)
+                        {
+                        <tr class="row">
+                            <th scope="row" class="col-lg-8 d-flex justify-content-between"><h5>@order.Product.Name</h5></th>
+                            <td class="col-lg-2 d-flex justify-content-between"><h5>x@order.Quantity</h5></td>
+                            <td class="col-lg-2 d-flex justify-content-between"><h5>$@order.Product.Price</h5></td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <hr class="bg-musaca hr-2" />
+            <div class="d-flex justify-content-between">
+                <table class="table table-hover table">
+                    <tbody>
+                        <tr class="row">
+                            <th scope="row" class="col-lg-8 d-flex justify-content-between"><h5>Total</h5></th>
+                            <td class="col-lg-2 d-flex justify-content-between"><h5>$@Model.Total</h5></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <hr class="bg-musaca hr-2" />
+            <div class="d-flex justify-content-between">
+                <table class="table table-hover table">
+                    <tbody>
+                        <tr class="row">
+                            <th scope="row" class="col-lg-8 d-flex justify-content-between"><h5>Issued On</h5></th>
+                            <td class="col-lg-2 d-flex justify-content-between"><h5>$@Model.IssuedOn</h5></td>
+                            <th scope="row" class="col-lg-8 d-flex justify-content-between"><h5>Cashier</h5></th>
+                            <td class="col-lg-2 d-flex justify-content-between"><h5>@Model.Cashier.Username</h5></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <hr class="bg-musaca hr-2" />
+            <div class="d-flex justify-content-between">
+                <table class="table table-hover table">
+                    <tbody>
+                        <tr class="row">
+                            <th scope="row" class="col-lg-8 d-flex justify-content-between"><h5>Receipt</h5></th>
+                            <td class="col-lg-2 d-flex justify-content-between"><h5>@Model.Id</h5></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
